@@ -1,0 +1,4 @@
+interface:
+  display_name: "변경 코드 학습 TODO 정리"
+  short_description: "미커밋 코드의 학습 TODO 주석만 공식 자료와 함께 정리합니다."
+  default_prompt: "미커밋 코드에서 학습 질문이 적힌 TODO 주석만 찾아 프로젝트의 todos 디렉터리에 정리하고 원본 주석에는 문서 링크만 남겨 주세요."

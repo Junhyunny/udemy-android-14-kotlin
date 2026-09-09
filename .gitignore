@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Android Studio / IntelliJ IDEA project metadata
+*.iml
+.idea/
+
+# Gradle / Kotlin build outputs and caches
+.gradle/
+.kotlin/
+**/build/
+
+# Android local SDK configuration and generated native build files
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Signing keys and local signing configuration
+*.jks
+*.keystore
+key.properties
+
+# Claude Code - per-user settings
+.claude/settings.local.json
