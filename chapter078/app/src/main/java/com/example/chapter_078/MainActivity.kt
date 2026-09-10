@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,9 +30,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.chapter_078.ui.theme.Chapter078Theme
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 
 /*
 * ComponentActivity 역할은 뭐야? 어떤 종류의 액티비티들이 있지? 각 액티비티들은 어떤 역할을 해?
@@ -50,10 +58,40 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+data class Unit(
+    val value: String,
+    val factor: BigDecimal
+)
+
 @Composable
 fun UnitConverter() {
+    val units = listOf(
+        Unit("millimeters", BigDecimal.ONE),
+        Unit("centimeters", 10.toBigDecimal()),
+        Unit("feets", BigDecimal("304.8")),
+        Unit("meters", 1000.toBigDecimal()),
+    )
     // TODO: [todos/compose-remember-mutablestate-and-by.md](../../../../../../../../todos/compose-remember-mutablestate-and-by.md)
-    var open by remember { mutableStateOf(false) }
+    var isInputExpand by remember { mutableStateOf(false) }
+    var isOutputExpand by remember { mutableStateOf(false) }
+    var inputValue by remember { mutableStateOf("") }
+    var inputUnit by remember { mutableStateOf("") }
+    var outputUnit by remember { mutableStateOf("") }
+    val inConversionFactor = remember { mutableStateOf(BigDecimal.ZERO) }
+    val outConversionFactor = remember { mutableStateOf(BigDecimal.ZERO) }
+
+    fun convertValue(): BigDecimal {
+        if (inConversionFactor.value == BigDecimal.ZERO || outConversionFactor.value == BigDecimal.ZERO) {
+            return BigDecimal.ZERO
+        }
+        val value = inputValue.toBigDecimalOrNull() ?: BigDecimal.ZERO
+        return value
+            .multiply(inConversionFactor.value)
+            // TODO: [todos/kotlin-bigdecimal-division-and-formatting.md](../../../../../../../../todos/kotlin-bigdecimal-division-and-formatting.md)
+            .divide(outConversionFactor.value, MathContext(10, RoundingMode.HALF_UP))
+            // TODO: [todos/kotlin-bigdecimal-division-and-formatting.md](../../../../../../../../todos/kotlin-bigdecimal-division-and-formatting.md)
+            .stripTrailingZeros()
+    }
 
     // TODO: [todos/compose-column-and-row-layout.md](../../../../../../../../todos/compose-column-and-row-layout.md)
     Column(
@@ -63,31 +101,59 @@ fun UnitConverter() {
         // TODO: [todos/android-dp-unit.md](../../../../../../../../todos/android-dp-unit.md)
         // padding(10.dp, 75.dp)
     ) {
-        Text("Unit Converter")
+        Text("Unit Converter", style = MaterialTheme.typography.headlineLarge)
         // TODO: [todos/compose-padding-vs-spacer.md](../../../../../../../../todos/compose-padding-vs-spacer.md)
         Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(value = "", onValueChange = {})
+        OutlinedTextField(
+            value = inputValue,
+            onValueChange = { inputValue = it },
+            label = { Text("value") })
         Spacer(modifier = Modifier.height(16.dp))
         // TODO: [todos/compose-column-and-row-layout.md](../../../../../../../../todos/compose-column-and-row-layout.md)
         Row {
             // TODO: [todos/compose-box-usage.md](../../../../../../../../todos/compose-box-usage.md)
             Box {
-                Button(onClick = { open = true }) {
-                    Text("Select")
+                Button(onClick = { isInputExpand = true }) {
+                    Text(inputUnit.ifEmpty { "select" })
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
                 }
-                DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
-                    for (index: Int in 0..<4) {
+                DropdownMenu(
+                    expanded = isInputExpand,
+                    onDismissRequest = { isInputExpand = false }) {
+                    for (unit in units) {
                         // TODO: [todos/compose-list-item-key.md](../../../../../../../../todos/compose-list-item-key.md)
-                        DropdownMenuItem(text = { Text("$index") }, onClick = {})
+                        DropdownMenuItem(
+                            text = { Text(unit.value) },
+                            onClick = {
+                                inputUnit = unit.value
+                                isInputExpand = false
+                                inConversionFactor.value = unit.factor
+                            }
+                        )
                     }
                 }
             }
             Spacer(modifier = Modifier.width(16.dp))
             Box {
-                Button(onClick = {}) {
-                    Text("Select")
+                Button(onClick = { isOutputExpand = true }) {
+                    Text(outputUnit.ifEmpty { "select" })
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Arrow Down")
+                }
+                DropdownMenu(
+                    expanded = isOutputExpand,
+                    onDismissRequest = { isOutputExpand = false }
+                ) {
+                    for (unit in units) {
+                        // TODO: [todos/compose-list-item-key.md](../../../../../../../../todos/compose-list-item-key.md)
+                        DropdownMenuItem(
+                            text = { Text(unit.value) },
+                            onClick = {
+                                outputUnit = unit.value
+                                isOutputExpand = false
+                                outConversionFactor.value = unit.factor
+                            }
+                        )
+                    }
                 }
             }
             // TODO: [todos/compose-localcontext.md](../../../../../../../../todos/compose-localcontext.md)
@@ -102,7 +168,16 @@ fun UnitConverter() {
             // }
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Result: ")
+        Text(
+            "Result: ${convertValue().toPlainString()} $outputUnit",
+            // TODO: [todos/android-dp-unit.md](../../../../../../../../todos/android-dp-unit.md)
+            // fontSize = 20.sp
+            style = TextStyle(
+                fontFamily = FontFamily.Default,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        )
     }
 }
 
