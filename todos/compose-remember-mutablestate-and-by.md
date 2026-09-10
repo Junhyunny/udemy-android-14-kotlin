@@ -5,6 +5,12 @@
 - [`chapter078/app/src/main/java/com/example/chapter_078/MainActivity.kt`](../chapter078/app/src/main/java/com/example/chapter_078/MainActivity.kt)
 - 질문: 안드로이드에서 상태 관리는 `var open by remember { mutableStateOf(false) }`처럼 하는가? `by`와 `remember`는 무엇인가? `by`를 따라가면 `getValue`, `setValue`가 보이는데 왜 `by`로 표현하는가?
 
+## 질문 전제 점검
+
+- **"안드로이드에서 상태 관리는 아래처럼 하나?"** → 이 한 줄은 상태 관리 전체가 아니라 **화면 하나에 갇힌 지역 UI 상태**를 다루는 방법이다. 드롭다운이 열렸는지 같은 값에는 적절하지만, 화면을 벗어나 살아남아야 하는 상태(입력값, 서버 응답, 로그인 여부)에는 부족하다. 회전 한 번이면 사라진다.
+- **"`by` 키워드, `remember` 키워드"** → 둘 다 키워드가 아니다. `by`는 코틀린 **문법**(위임 프로퍼티)이고, `remember`는 Compose가 제공하는 **함수**다. 성격이 다른 셋(`by` 문법 + `remember` 함수 + `mutableStateOf` 함수)이 한 줄에 겹쳐 있어 하나처럼 보일 뿐이다.
+- **"`by`를 타고 들어가면 `getValue`, `setValue` 같은 함수가 보이는데 왜 `by`로 표현하지?"** → 관찰이 정확하다. `by`가 바로 그 두 함수 호출로 컴파일되는 문법이다. Compose가 만든 규칙이 아니라 코틀린 언어 기능이라는 점만 분명히 해두면 된다.
+
 ## 공부할 내용
 
 한 줄에 서로 다른 세 가지 개념이 겹쳐 있다. 분리해서 보면 이해하기 쉽다.
@@ -65,6 +71,64 @@ val (value, setValue) = remember { mutableStateOf(default) }
 
 이 예제처럼 컴포저블 내부에 상태를 두는 것은 시작점이다. 실제 앱에서는 상태 호이스팅으로 상태를 호출자에게 올리고, 화면 수준 상태는 `ViewModel`에 두는 방식을 권장한다.
 
+## 관련 아키텍처와 베스트 프랙티스
+
+### 단방향 데이터 흐름(UDF)
+
+Compose UI가 전제하는 데이터 흐름은 한 방향이다.
+
+```
+        상태(state) ↓                    ↑ 이벤트(event)
+상태 홀더 ──────────→ 컴포저블 ──────────→ 상태 홀더
+```
+
+상태는 위에서 아래로 흐르고, 사용자 상호작용은 이벤트가 되어 위로 올라간다. 컴포저블이 상태를 직접 고치지 않고 "이런 일이 일어났다"고 알리기만 하면, 상태 변경 지점이 한 곳으로 모여 추적과 테스트가 쉬워진다.
+
+### 상태 호이스팅
+
+지역 상태를 파라미터로 끌어올리는 리팩터링이다.
+
+```kotlin
+// 이전: 상태를 스스로 소유해 재사용·테스트가 어렵다
+@Composable
+fun UnitConverter() {
+    var open by remember { mutableStateOf(false) }
+    ...
+}
+
+// 이후: 상태 없는 컴포저블 + 상태를 가진 호출자
+@Composable
+fun UnitConverter(open: Boolean, onOpenChange: (Boolean) -> Unit) { ... }
+```
+
+호이스팅한 컴포저블은 프리뷰에 원하는 상태를 바로 넣어볼 수 있고, 같은 UI를 다른 화면에서 재사용할 수 있다. 다만 무조건 올리는 것이 답은 아니다. 공식 가이드는 **그 상태를 읽는 모든 컴포저블의 가장 낮은 공통 조상**까지만 올리라고 안내한다. 드롭다운 열림 여부처럼 아무도 관심 없는 상태는 지역에 두는 편이 낫다.
+
+### 상태의 종류에 따라 도구를 고른다
+
+| 상태 성격 | 예 | 도구 |
+| --- | --- | --- |
+| 일시적 UI 상태 | 드롭다운 열림, 스크롤 위치 | `remember` |
+| 구성 변경을 견뎌야 하는 UI 상태 | 입력 중인 텍스트 | `rememberSaveable` |
+| 화면 단위 비즈니스 상태 | 변환 결과, 로딩·에러 | `ViewModel` + `StateFlow` |
+| 앱 전체가 공유하는 데이터 | 로그인 세션, 설정 | 데이터 레이어(Repository) |
+
+`ViewModel`의 상태는 화면에서 `collectAsStateWithLifecycle()`로 구독한다. UI 상태는 보통 불변 데이터 클래스 하나로 모아 표현한다.
+
+```kotlin
+data class UnitConverterUiState(
+    val input: String = "",
+    val result: String = "",
+    val isMenuOpen: Boolean = false,
+)
+```
+
+### 자주 밟는 함정
+
+- `remember`를 빼먹어 매 재구성마다 상태가 초기화된다.
+- 입력이 바뀌어도 갱신되어야 하는 값에 `remember(key)`의 키를 주지 않아 옛 값이 남는다.
+- 파생 값을 상태로 따로 들고 있다가 불일치가 생긴다. 계산으로 얻을 수 있는 값은 상태로 만들지 말고, 비싼 경우에만 `derivedStateOf`를 쓴다.
+- 컴포저블 본문에서 상태를 변경한다. 상태 변경은 이벤트 콜백이나 부수 효과 API 안에서 한다.
+
 ## 체크리스트
 
 - [ ] `mutableStateOf`가 일반 변수와 다른 점을 재구성 관점에서 설명할 수 있다.
@@ -81,3 +145,7 @@ val (value, setValue) = remember { mutableStateOf(default) }
 - [Android Developers: Where to hoist state](https://developer.android.com/develop/ui/compose/state-hoisting)
 - [Kotlin: Delegated properties](https://kotlinlang.org/docs/delegated-properties.html)
 - [Android Developers API: `androidx.compose.runtime` 패키지](https://developer.android.com/reference/kotlin/androidx/compose/runtime/package-summary)
+- [Android Developers: UI layer architecture](https://developer.android.com/topic/architecture/ui-layer)
+- [Android Developers: State holders and UI state](https://developer.android.com/topic/architecture/ui-layer/stateholders)
+- [Android Developers: Side-effects in Compose](https://developer.android.com/develop/ui/compose/side-effects)
+- [Android Developers: ViewModel overview](https://developer.android.com/topic/libraries/architecture/viewmodel)

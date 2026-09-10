@@ -5,6 +5,13 @@
 - [`chapter036/lib/build.gradle.kts`](../chapter036/lib/build.gradle.kts)
 - 질문: 빈 액티비티 프로젝트에 `main` 함수가 있는 코틀린 파일을 만들어 실행했더니 `SourceSet with name 'main' not found` 에러가 났다. 왜 실패했고, 안드로이드 스튜디오는 모듈의 `build.gradle.kts`를 기준으로 빌드하고 실행하는가?
 
+## 질문 전제 점검
+
+- **"빈 액티비티로 만든 후에 `main` 메서드가 있는 코틀린 파일을 만들어 실행"**하려 한 시도 자체가 안드로이드 앱 모듈에서는 성립하지 않는다. 안드로이드 앱에는 단일 진입점 `main()`이 없기 때문이다. 이 부분이 질문에 깔린 가장 큰 전제 오류다.
+- **에러 원인 추정("안드로이드 앱이 일반 자바 애플리케이션이 아니기 때문")** → 맞다. 다만 한 단계 더 정확히 말하면, 실패한 지점은 코드 실행이 아니라 **Gradle 구성 단계**다. IDE가 만든 JVM 실행용 초기화 스크립트가 자바 플러그인의 `main` 소스셋을 찾지 못해 태스크 생성에 실패했다.
+- **"안드로이드 스튜디오는 기본적으로 해당 모듈에 있는 `build.gradle.kts` 파일을 기준으로 빌드, 실행하나?"** → 절반만 맞다. **빌드 방식**은 모듈의 빌드 파일이 결정하지만, **무엇을 어떻게 실행할지**는 실행/디버그 구성이 결정한다. 두 층을 분리해서 보는 것이 중요하다.
+- 참고로 `src/main/`이라는 디렉터리가 있으니 `main` 소스셋도 있으리라 생각하기 쉬운데, 안드로이드의 `main`과 Gradle 자바 플러그인의 `main`은 이름만 같고 서로 다른 개념이다.
+
 ## 공부할 내용
 
 ### 안드로이드 앱에는 `main` 함수가 없다
@@ -44,6 +51,52 @@ IDE가 `main` 함수 옆의 실행 버튼으로 만든 실행 구성은 JVM 애�
 
 따라서 "모듈의 `build.gradle.kts`를 기준으로 빌드한다"는 맞지만, 실행 대상과 방식은 실행 구성이 함께 결정한다.
 
+## 관련 아키텍처와 베스트 프랙티스
+
+### 진입점이 다르면 실행 모델도 다르다
+
+| | JVM 애플리케이션 | 안드로이드 앱 |
+| --- | --- | --- |
+| 진입점 | `main()` 함수 하나 | 매니페스트에 선언된 구성요소 여러 개 |
+| 시작 주체 | JVM | 안드로이드 시스템(인텐트) |
+| 수명 관리 | 프로세스가 `main` 종료까지 | 시스템이 생명주기 콜백으로 관리 |
+| 실행 구성 | Application/Kotlin | Android App |
+
+이 차이 때문에 "코드를 실행한다"는 말의 의미부터 달라진다. 안드로이드에서는 코드를 실행하는 것이 아니라 **기기에 앱을 설치하고 컴포넌트를 띄우도록 시스템에 요청**한다.
+
+### 순수 로직은 안드로이드 밖으로
+
+이번에 겪은 문제를 회피 수단이 아니라 설계 원칙으로 승격하면 유용하다. 가위바위보 판정처럼 안드로이드 API가 필요 없는 로직은 안드로이드 모듈 밖에 두는 편이 낫다.
+
+- 빌드와 테스트가 빠르다. 에뮬레이터도, 계측 테스트도 필요 없다.
+- 다른 플랫폼이나 다른 앱에서 재사용할 수 있다.
+- UI 프레임워크 변화(뷰 → Compose)에 영향받지 않는다.
+
+이는 아키텍처 가이드가 말하는 관심사 분리, 그리고 도메인 로직을 프레임워크에서 떼어내는 일반적인 원칙과 같은 방향이다.
+
+### `main` 대신 테스트로 실행하기
+
+학습 중 로직을 빠르게 돌려보고 싶을 때 `main` 함수보다 단위 테스트가 더 나은 도구다. 실행 구성 문제를 겪지 않고, 입력과 기대값을 남길 수 있으며, 나중에 회귀 검증에도 쓰인다.
+
+```kotlin
+class RockPaperScissorsTest {
+    @Test
+    fun `같은 선택이면 무승부다`() {
+        assertEquals("Tie", judge(player = "rock", computer = "rock"))
+    }
+}
+```
+
+이 형태로 쓰려면 `main` 안에 뒤섞인 입출력과 판정 로직을 분리해 판정 함수를 순수 함수로 뽑아야 한다. 테스트하기 쉬운 구조가 곧 잘 분리된 구조라는 신호이기도 하다.
+
+### 에러 메시지 읽는 법
+
+`SourceSet with name 'main' not found`처럼 프레임워크 내부 용어가 나오는 에러는 다음 순서로 접근하면 원인에 빨리 닿는다.
+
+1. 어느 단계에서 실패했는가. 구성(configuration)인가 실행(execution)인가. 여기서는 태스크를 만들다 실패했으니 구성 단계다.
+2. 그 용어가 어느 도구의 개념인가. `SourceSet`은 Gradle 자바 플러그인의 개념이다.
+3. 지금 모듈에 그 개념이 존재하는가. 안드로이드 앱 모듈에는 없다. 여기서 원인이 드러난다.
+
 ## 체크리스트
 
 - [ ] 안드로이드 앱에 단일 진입점 `main()`이 없다는 사실과 그 대안을 설명할 수 있다.
@@ -61,3 +114,6 @@ IDE가 `main` 함수 옆의 실행 버튼으로 만든 실행 구성은 JVM 애�
 - [Android Developers: Projects overview](https://developer.android.com/studio/projects)
 - [Kotlin: Configure a Gradle project (Targeting the JVM)](https://kotlinlang.org/docs/gradle-configure-project.html#targeting-the-jvm)
 - [Gradle: The Java Plugin (source sets)](https://docs.gradle.org/current/userguide/java_plugin.html#source_sets)
+- [Android Developers: Guide to app architecture](https://developer.android.com/topic/architecture)
+- [Android Developers: Test apps on Android](https://developer.android.com/training/testing)
+- [Android Developers: Build local unit tests](https://developer.android.com/training/testing/local-tests)
