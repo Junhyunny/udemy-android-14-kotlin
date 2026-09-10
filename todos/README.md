@@ -19,3 +19,6 @@
 - [ ] [`LocalContext`의 역할](compose-localcontext.md)
 - [ ] [`Toast`에 컨텍스트를 전달하는 이유](android-context-and-toast.md)
 - [ ] [컴포저블 함수가 화면에 그려지기까지](compose-rendering-pipeline.md)
+- [ ] [`BigDecimal` 나눗셈과 출력 형식](kotlin-bigdecimal-division-and-formatting.md)
+- [ ] [재구성은 언제, 어디까지 일어나는가](compose-recomposition-timing-and-scope.md)
+- [ ] [`remember`가 만든 상태는 어디에 저장되는가](compose-state-storage-and-snapshot.md)
