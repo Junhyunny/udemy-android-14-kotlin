@@ -22,3 +22,6 @@
 - [ ] [`BigDecimal` 나눗셈과 출력 형식](kotlin-bigdecimal-division-and-formatting.md)
 - [ ] [재구성은 언제, 어디까지 일어나는가](compose-recomposition-timing-and-scope.md)
 - [ ] [`remember`가 만든 상태는 어디에 저장되는가](compose-state-storage-and-snapshot.md)
+- [ ] [`@OptIn`과 실험적 API](kotlin-optin-experimental-api.md)
+- [ ] [새 리스트를 대입했는데 재구성이 되는 이유](compose-state-list-reference-change.md)
+- [ ] [`Modifier.wrapContentSize()`는 무엇을 하는가](compose-wrapcontentsize-modifier.md)
