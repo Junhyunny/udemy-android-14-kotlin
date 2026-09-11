@@ -4,6 +4,8 @@
 
 - [`chapter092/app/src/main/java/com/example/chapter_092/MainActivity.kt`](../chapter092/app/src/main/java/com/example/chapter_092/MainActivity.kt)
 - 질문: 상태가 변경되었을 때 어느 시점에 리컴포즈가 발생하는가? 부분 리컴포즈인가 전체 화면 리컴포즈인가? 리컴포즈가 일어나는 과정을 순서대로 알고 싶다.
+- [`chapter127/app/src/main/java/com/example/chapter_127/MainActivity.kt`](../chapter127/app/src/main/java/com/example/chapter_127/MainActivity.kt)
+- 질문: 로그로 확인해 보니 버튼을 눌러도 전체 화면이 아니라 `CounterApp` 부분만 재구성된다. 특정 컴포저블만 다시 실행되는 원리는 무엇이고, 재구성 스코프는 무엇을 기준으로 생각하면 되는가?
 
 ## 질문 전제 점검
 
@@ -57,6 +59,44 @@ fun CaptainGame() {
 - `DirectionButton`은 전달되는 인자(`String`, `MutableState`, `Int`)가 그대로라면 건너뛸 수 있다. 문자열과 `MutableState`는 안정(stable) 타입이기 때문이다.
 - 범위를 더 좁히려면 상태를 읽는 위치를 낮춘다. 예를 들어 `Text(text = "...")`를 감싼 별도 컴포저블에서 값을 읽게 하면 그 컴포저블만 재구성된다.
 
+### 로그로 확인한 스코프 — `chapter127`
+
+`chapter127`은 각 단계에 로그를 심어 스코프를 직접 관찰한 사례다. 버튼을 누를 때마다 찍히는 로그는 두 줄뿐이다.
+
+```
+custom  I  re-composable              ← setContent 람다 (최초 1회만)
+custom  I  Surface re-composable      ← Surface 호출부 (최초 1회만)
+custom  I  CounterApp re-composable         ← 버튼을 누를 때마다
+custom  I  CounterApp Column re-composable  ← 버튼을 누를 때마다
+```
+
+이 결과는 다음과 같이 설명된다.
+
+1. **상태를 읽은 곳이 `CounterApp` 안이다.** `Text(text = "Count: ${viewModel.count.value}")`에서 `value`를 읽는 코드는 `CounterApp`의 본문에서 실행된다. 따라서 무효화되는 스코프는 `CounterApp`이다.
+2. **`setContent` 람다와 `Surface` 호출부는 상태를 읽지 않는다.** 그래서 무효화 대상이 아니고 다시 실행되지 않는다. `viewModel` 변수를 만드는 줄이 한 번만 실행된 이유도 이것이다.
+3. **`Column`의 content 람다는 별도 스코프가 아니다.** `Column`, `Row`, `Box` 같은 기본 레이아웃은 인라인 함수라서 자신만의 재시작 스코프를 만들지 않는다. 그 안의 코드는 호출한 컴포저블의 스코프에 속하므로 `CounterApp`이 재구성될 때 함께 실행된다.
+
+여기서 실용적인 기준이 나온다.
+
+> 재구성 스코프는 **상태를 읽은 코드가 속한, 재시작 가능한 컴포저블 함수**다. `Column`/`Row`/`Box`의 중괄호는 경계가 아니다.
+
+범위를 더 좁히고 싶다면 상태를 읽는 부분만 별도 컴포저블로 분리한다.
+
+```kotlin
+@Composable
+fun CounterApp(viewModel: CounterViewModel) {
+    Column(...) {
+        CountText(count = { viewModel.count.value })   // 읽기를 이 안으로 미룬다
+        Buttons(onIncrement = viewModel::increment, onDecrement = viewModel::decrement)
+    }
+}
+
+@Composable
+private fun CountText(count: () -> Int) {
+    Text(text = "Count: ${count()}")   // 이제 이 컴포저블만 재구성된다
+}
+```
+
 ### 재구성에 대해 보장되지 않는 것
 
 - 실행 순서: 컴포저블은 선언 순서대로 실행된다고 보장되지 않는다.
@@ -109,6 +149,8 @@ Compose는 "모든 입력이 안정(stable)하고 바뀌지 않았을 때" 재�
 - [ ] 재구성이 예약되고 실행되기까지의 단계를 순서대로 말할 수 있다.
 - [ ] 재구성 범위를 결정하는 것이 "상태를 읽은 위치"임을 설명할 수 있다.
 - [ ] `chapter092` 코드에서 어느 범위가 재구성되는지 설명할 수 있다.
+- [ ] 인라인 레이아웃의 content 람다가 별도 스코프가 아니라는 점을 설명할 수 있다.
+- [ ] 로그나 도구로 재구성 스코프를 직접 확인할 수 있다.
 - [ ] Compose가 재구성을 건너뛰는 조건을 설명할 수 있다.
 - [ ] 컴포저블 본문에 부수 효과를 두면 안 되는 이유를 재구성 보장 관점에서 설명할 수 있다.
 

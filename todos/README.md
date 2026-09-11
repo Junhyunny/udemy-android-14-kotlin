@@ -25,3 +25,6 @@
 - [ ] [`@OptIn`과 실험적 API](kotlin-optin-experimental-api.md)
 - [ ] [새 리스트를 대입했는데 재구성이 되는 이유](compose-state-list-reference-change.md)
 - [ ] [`Modifier.wrapContentSize()`는 무엇을 하는가](compose-wrapcontentsize-modifier.md)
+- [ ] [`ViewModel`의 역할과 `remember`가 필요 없는 이유](android-viewmodel-role-and-remember.md)
+- [ ] [`viewModel()` 함수와 직접 생성의 차이](compose-viewmodel-function-vs-manual.md)
+- [ ] [`Repository` 호출이 없어도 동작하는데 왜 필요한가](android-repository-single-source-of-truth.md)
