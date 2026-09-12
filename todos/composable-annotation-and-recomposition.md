@@ -2,7 +2,7 @@
 
 ## 질문이 나온 문서와 코드
 
-- [`chapter-019/index.md`](../chapter-019/index.md)
+- [`chapter019/index.md`](../chapter019/index.md)
 - 질문: `@Composable` 애너테이션은 무엇이며, 컴포저블 함수는 어떻게 UI를 갱신할까?
 - [`chapter078/app/src/main/java/com/example/chapter_078/MainActivity.kt`](../chapter078/app/src/main/java/com/example/chapter_078/MainActivity.kt)
 - 질문: `@Composable`이 붙은 함수는 화면에 표시할 수 있는 뷰(view)나 위젯(widget)으로 동작하는 것 같은데 맞는가? 용어는 뷰인가 위젯인가?

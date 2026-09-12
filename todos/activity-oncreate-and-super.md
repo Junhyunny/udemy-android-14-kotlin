@@ -2,7 +2,7 @@
 
 ## 질문이 나온 문서
 
-- [`chapter-019/index.md`](../chapter-019/index.md)
+- [`chapter019/index.md`](../chapter019/index.md)
 - 질문: `onCreate`는 언제 호출되며, `super.onCreate(savedInstanceState)`는 왜 필요할까?
 
 ## 질문 전제 점검

@@ -2,7 +2,7 @@
 
 ## 질문이 나온 문서
 
-- [`chapter-019/index.md`](../chapter-019/index.md)
+- [`chapter019/index.md`](../chapter019/index.md)
 - 질문: 액티비티는 화면 자체일까? 화면이 바뀔 때마다 다른 액티비티로 이동할까?
 
 ## 질문 전제 점검
