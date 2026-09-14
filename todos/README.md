@@ -33,3 +33,6 @@
 - [ ] [`viewModelScope.launch`로 감싸야 하는 이유](android-viewmodelscope-launch-necessity.md)
 - [ ] [코루틴 안의 `try-catch`는 왜 필요한가](kotlin-coroutines-exception-handling-try-catch.md)
 - [ ] [`contentDescription`은 왜 필수 값이고 `null`은 무슨 뜻인가](compose-image-content-description-null.md)
+- [ ] [`navigation-compose`와 `navigation3`은 무엇이 다른가](android-navigation-compose-vs-navigation3.md)
+- [ ] [문자열 route 방식은 최신·권장 방식인가](android-navigation-string-route-vs-type-safe.md)
+- [ ] [라우팅 파라미터가 많아지면 어떻게 전달하는가](android-navigation-passing-many-arguments.md)
