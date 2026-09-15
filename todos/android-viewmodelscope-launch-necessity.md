@@ -3,6 +3,7 @@
 ## 질문이 나온 코드
 
 - [`chapter143/app/src/main/java/com/example/chapter_143/MainViewModel.kt`](../chapter143/app/src/main/java/com/example/chapter_143/MainViewModel.kt)
+- [`chapter205/app/src/main/java/com/example/chapter_205/WishViewModel.kt`](../chapter205/app/src/main/java/com/example/chapter_205/WishViewModel.kt)
 - 질문: 코루틴 API 요청을 백그라운드에서 실행하려면 `viewModelScope.launch` 안에 로직을 넣어야 하는가? 별도의 `launch`가 필요한 이유는 무엇이고, 그냥 실행하면 어떤 문제가 생기는가?
 
 ```kotlin

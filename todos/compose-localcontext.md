@@ -4,6 +4,7 @@
 
 - [`chapter078/app/src/main/java/com/example/chapter_078/MainActivity.kt`](../chapter078/app/src/main/java/com/example/chapter_078/MainActivity.kt)
 - [`chapter078/app/src/main/java/com/example/chapter_078/ui/theme/Theme.kt`](../chapter078/app/src/main/java/com/example/chapter_078/ui/theme/Theme.kt)
+- [`chapter205/app/src/main/java/com/example/chapter_205/HomeView.kt`](../chapter205/app/src/main/java/com/example/chapter_205/HomeView.kt)
 - 질문: `LocalContext`의 역할은 무엇인가? 언제 사용하는가? 상태를 저장할 수 있는가? 어떤 정보를 담고 있는 객체인가? 사용 예제를 정리해 달라.
 
 ## 질문 전제 점검
