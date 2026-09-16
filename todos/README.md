@@ -62,3 +62,8 @@
 - [ ] [`navArgument`로 인자를 선언하는 방식이 베스트 프랙티스인가](android-navigation-navargument-setup.md)
 - [ ] [`popBackStack`과 `navigateUp`은 무엇이 다른가](android-navigation-popbackstack-vs-navigateup.md)
 - [ ] [화면에서 상태를 직접 바꾸는 게 맞나 — 비동기 실행 시점](android-viewmodel-encapsulation-and-async-timing.md)
+- [ ] [`@DrawableRes` 애너테이션 용도가 뭐야](android-drawable-res-annotation.md)
+- [ ] [`stickyHeader` 기능은 뭘까](compose-lazy-list-sticky-header.md)
+- [ ] [`is` 키워드 용도가 뭐야](kotlin-is-operator-and-smart-cast.md)
+- [ ] [아이콘 색은 `tint`로 바꾸나 `colors`로 지정하나](compose-icon-tint-vs-component-colors.md)
+- [ ] [바텀 시트는 상태 플래그로 여나 `SheetState`로 여나](compose-modal-bottom-sheet-state-and-sheetstate.md)
