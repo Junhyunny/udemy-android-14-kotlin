@@ -4,6 +4,8 @@
 
 - [`chapter143/app/src/main/java/com/example/chapter_143/MainViewModel.kt`](../chapter143/app/src/main/java/com/example/chapter_143/MainViewModel.kt)
 - 질문: `viewModelScope.launch` 안에서 `try-catch`로 예외를 삼킨 이유는 무엇인가? 예외 처리 없이 쓰면 안 되는가? `try-catch`가 없다면 예외가 앱을 크래시시킬 정도로 이전 스택에 던져지는가?
+- [`chapter186/app/src/main/java/com/example/chapter_186/LocationViewModel.kt`](../chapter186/app/src/main/java/com/example/chapter_186/LocationViewModel.kt)
+- 실제 사례: `try`를 `launch` **바깥**에 두어 앱이 크래시했다. 아래 [실전 사례](#실전-사례--잘못-놓인-try-catch가-크래시를-숨긴다) 참고.
 
 ```kotlin
 viewModelScope.launch {
@@ -206,6 +208,86 @@ launch {
 }
 ```
 
+### 실전 사례 — 잘못 놓인 `try-catch`가 크래시를 숨긴다
+
+`chapter186`에서 실제로 앱이 죽은 코드다. 위치를 고르고 "Set Location"을 누르면 다이얼로그는 정상적으로 닫히는데, 잠시 뒤 앱이 종료됐다.
+
+```kotlin
+fun fetchAddress(latLng: String) {
+    try {
+        viewModelScope.launch {                              // ← launch 는 즉시 반환
+            val result = RetrofitClient.create().getAddressFromCoordinate(...)
+            //           ↑ 예외는 여기서, 나중에, 다른 실행 흐름에서 터진다
+            _address.value = result.results
+        }
+    } catch (e: Exception) {                                 // ← 절대 실행되지 않는다
+        Log.d("Resource by our main lab's leader", "${e.cause}/${e.message}, ")
+    }
+}
+```
+
+`BASE_URL`에 `maps.googleapis.con`(`.com` 오타)이 들어가 있어 `UnknownHostException`이 났고, 그 예외가 아무에게도 잡히지 않아 앱이 죽었다.
+
+**여기서 배울 점은 오타가 아니라, 이 `try-catch`가 디버깅을 방해했다는 것이다.**
+
+| 증상 | 원인 |
+| --- | --- |
+| 직접 심어 둔 `Log.d`가 안 찍힌다 | `catch`가 실행되지 않으니 당연하다 |
+| 화면은 정상 동작하는 것처럼 보인다 | `fetchAddress()`가 즉시 반환 → `popBackStack()`이 먼저 실행 → 몇백 ms 뒤에 크래시 |
+| Logcat에 아무것도 없다 | 크래시 로그의 태그는 `AndroidRuntime`. 자기 태그로 필터링 중이면 안 보인다 |
+
+**`try-catch`가 있으면 "예외 처리를 했다"고 착각하게 된다.** 없느니만 못한 상황이 여기서 나온다.
+
+#### 고친 형태
+
+```kotlin
+fun fetchAddress(latLng: String) {
+    viewModelScope.launch {
+        try {                                                // ← launch 안으로
+            val result = RetrofitClient.create().getAddressFromCoordinate(
+                latLng, BuildConfig.MAPS_API_KEY
+            )
+            Log.i("fetchAddress", result.results.toString())
+            _address.value = result.results
+        } catch (e: CancellationException) {
+            throw e                                          // ← 취소는 되던진다
+        } catch (e: Exception) {
+            Log.e("fetchAddress", "주소 조회 실패: $latLng", e)   // ← 예외 객체를 넘긴다
+        }
+    }
+}
+```
+
+세 가지가 달라졌다.
+
+1. **`try`가 `launch` 안으로 들어갔다** — 이제 실제로 잡힌다
+2. **`CancellationException`을 먼저 되던진다** — 화면 이탈이 에러로 둔갑하지 않는다
+3. **`Log.e(tag, msg, throwable)`** — 예외 객체를 세 번째 인자로 넘겨야 스택 트레이스가 남는다
+
+세 번째가 특히 중요하다. `"${e.cause}/${e.message}"`처럼 문자열로만 남기면 **어느 줄에서 터졌는지가 사라진다.**
+
+```kotlin
+Log.e("fetchAddress", "실패", e)      // 스택 트레이스 전체가 Logcat 에 남는다
+Log.d("tag", "${e.message}")         // 메시지 한 줄뿐. 원인 추적 불가
+```
+
+#### 비동기 코드에서 "로그가 없다"를 만났을 때
+
+```
+1. Logcat 필터를 전부 해제했는가?         → 태그 필터가 FATAL EXCEPTION 을 가린다
+2. 프로세스가 죽어 연결이 끊겼는가?        → adb logcat -d 로 버퍼를 통째로 덤프
+3. catch 가 실제로 실행되는가?            → catch 첫 줄에 로그를 찍어 확인
+4. 비동기 경계가 있는가?                  → launch / Thread / 콜백 바깥의 try 는 무용지물
+```
+
+```bash
+adb logcat -c                                  # 버퍼 비우기
+# 앱에서 크래시 재현
+adb logcat -d | grep -A 60 "FATAL EXCEPTION"
+```
+
+스택 트레이스에서 `Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException`이 보이면 **"코루틴에서 처리되지 않은 예외"**라는 신호다. `invokeSuspend` 프레임의 줄 번호가 내 코드에서 터진 지점이다.
+
 ### 이 코드에 적용한다면
 
 ```kotlin
@@ -349,6 +431,10 @@ fun retry() = fetchCategories()
 - [ ] `runCatching`이 코루틴에서 위험한 이유를 설명할 수 있다.
 - [ ] `supervisorScope`와 `coroutineScope`의 전파 차이를 설명할 수 있다.
 - [ ] 사용자 메시지와 개발자 로그를 분리해 작성할 수 있다.
+- [ ] 잘못 놓인 `try-catch`가 디버깅을 어렵게 만드는 이유를 설명할 수 있다.
+- [ ] `Log.e(tag, msg, throwable)`로 스택 트레이스를 남길 수 있다.
+- [ ] `FATAL EXCEPTION`을 Logcat에서 찾는 방법을 안다.
+- [ ] `DiagnosticCoroutineContextException`이 무엇을 뜻하는지 안다.
 
 ## 공식 참고 자료
 
