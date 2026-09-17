@@ -31,6 +31,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             // TODO: [todos/compose-viewmodel-function-vs-manual.md](../../../../../../../../todos/compose-viewmodel-function-vs-manual.md)
             Log.i("custom", "re-composable")
+            // FIXME: ViewModel 을 `setContent` 안에서 직접 생성하고 있다. 두 가지가 깨진다.
+            //  (1) 재구성될 때마다 새 인스턴스가 만들어진다 → `remember` 조차 걸려 있지 않다
+            //  (2) 화면 회전 시 카운트가 0 으로 초기화된다 → ViewModel 을 쓰는 이유 자체가 사라진다
+            //  고치기: 생성자 인자가 있으므로 팩토리와 함께 `viewModel()` 로 얻는다.
+            //      val viewModel: CounterViewModel = viewModel(factory = viewModelFactory {
+            //          initializer { CounterViewModel(CounterRepository()) }
+            //      })
             val viewModel = CounterViewModel(CounterRepository())
             Chapter127Theme {
                 Surface(
@@ -46,6 +53,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// FIXME: `Log.i("custom", ...)` 는 재구성 횟수를 눈으로 보려고 넣은 학습용 로그다.
+//  실제 앱이라면 남기지 않는다. 남긴다면 최소한 릴리스 빌드에서 제거되도록 처리한다.
+// FIXME: `modifier: Modifier = Modifier` 파라미터가 없다.
 @Composable
 fun CounterApp(viewModel: CounterViewModel) {
     Log.i("custom", "CounterApp re-composable")
