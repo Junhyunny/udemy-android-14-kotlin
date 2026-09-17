@@ -24,7 +24,11 @@ fun LocationSelectionScreen(
     location: LocationData,
     onLocationSelected: (LocationData) -> Unit
 ) {
+    // FIXME: 학습용 로그다. 삭제 대상.
     Log.d("LocationSelectionScreen", "logging")
+    // FIXME: 람다 안에서만 쓰는 값을 컴포저블 본문의 지역 변수로 선언했다.
+    //  컴포저블 본문은 재구성마다 다시 실행되므로 여기에 값을 담아 둘 수도 없다.
+    //  고치기: 선언을 없애고 `onLocationSelected(LocationData(...))` 로 바로 넘긴다.
     var newLocation: LocationData
     val userLocation = remember {
         mutableStateOf(
@@ -54,6 +58,11 @@ fun LocationSelectionScreen(
                 userLocation.value = it
             }
         ) {
+            // FIXME: 컴포저블 본문에서 `MarkerState` 를 새로 만들고 있다.
+            //  재구성마다 새 인스턴스가 생겨 드래그 상태·정보창 상태가 초기화된다.
+            //  고치기(현재 버전): val markerState = remember { MarkerState(userLocation.value) }
+            //                    LaunchedEffect(userLocation.value) { markerState.position = userLocation.value }
+            //  고치기(버전 올린 뒤): rememberUpdatedMarkerState(position = userLocation.value)
             Marker(state = MarkerState(position = userLocation.value))
         }
         Button(onClick = {

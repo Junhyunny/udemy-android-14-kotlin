@@ -17,6 +17,24 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
 import java.util.Locale
 
+// ARCH-FIXME: 이 클래스는 이름과 실제 역할이 다르다.
+//  "Utils" 라는 이름은 상태 없는 헬퍼 함수 모음을 뜻하지만, 실제로는
+//  위치 API 구독·권한 확인·주소 변환을 담당하는 **데이터 소스**다.
+//  이름이 역할을 숨기면 사람들이 아무 데서나 인스턴스를 만들어 쓰게 된다(실제로 그렇게 되고 있다).
+//  고치기: `LocationDataSource` 또는 `LocationRepository` 로 이름을 바꾸고 data 패키지로 옮긴다.
+//
+// ARCH-FIXME: 의존 방향이 뒤집혀 있다. MVVM 의 정상 방향은 아래와 같다.
+//      View → ViewModel → Repository/DataSource
+//  그런데 지금은 이렇다.
+//      View(Composable) 가 LocationUtils 를 만든다        ← View 가 데이터 계층을 직접 생성
+//      LocationUtils.requestLocationUpdate(viewModel)      ← DataSource 가 ViewModel 을 참조 (역방향)
+//  하위 계층이 상위 계층을 알게 되어, 이 클래스는 다른 화면·다른 ViewModel 에서 재사용할 수 없고
+//  단위 테스트를 하려면 ViewModel 인스턴스를 만들어 넘겨야 한다.
+//  고치기: 결과를 흘려보내고 구독은 ViewModel 이 한다.
+//      // DataSource
+//      fun locationUpdates(): Flow<LocationData> = callbackFlow { ... awaitClose { remove... } }
+//      // ViewModel
+//      init { viewModelScope.launch { dataSource.locationUpdates().collect { _uiState.update { ... } } } }
 class LocationUtils(val context: Context) {
 
     private val fusedLocationClient: FusedLocationProviderClient =

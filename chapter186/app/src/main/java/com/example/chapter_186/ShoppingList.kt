@@ -42,6 +42,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
+// FIXME: IDE 자동 임포트로 들어온 사용되지 않는 import 다.
+//  `java.nio.file` 은 API 26 미만에서 사용할 수 없어 minSdk 24 인 이 프로젝트에서는 위험하기도 하다.
+//  고치기: 삭제한다.
 import java.nio.file.WatchEvent
 
 data class ShoppingItem(
@@ -52,6 +55,27 @@ data class ShoppingItem(
     var address: String = ""
 )
 
+// ARCH-FIXME: 컴포저블 하나에 책임이 과하게 몰려 있다. 파라미터 5개가 그 증거다.
+//   locationUtils  → 데이터 소스를 화면이 직접 들고 있다
+//   viewModel      → 상태 보유자
+//   navController  → 내비게이션 전권
+//   context        → 안드로이드 프레임워크 (미리보기·테스트 불가의 주범)
+//   address        → 이미 가공된 표시용 문자열
+//  이 화면이 지금 하는 일을 세어 보면: 목록 상태 관리 + 항목 추가/수정/삭제 + 권한 요청 +
+//  rationale 판단 + Toast 안내 + 위치 구독 시작 + 화면 이동. 일곱 가지다.
+//
+//  고치기(방향): 화면은 "상태를 받고 이벤트를 올린다"만 한다.
+//      @Composable
+//      fun ShoppingListScreen(
+//          uiState: ShoppingUiState,
+//          onAddItem: (String, Int) -> Unit,
+//          onEditItem: (ShoppingItem) -> Unit,
+//          onDeleteItem: (ShoppingItem) -> Unit,
+//          onRequestAddress: () -> Unit,
+//          modifier: Modifier = Modifier,
+//      )
+//  권한 흐름은 화면에 남더라도(런처는 컴포저블에 묶이므로) "허용됨/거부됨"만 ViewModel 에 알리고
+//  그 다음 판단은 ViewModel 이 하게 한다.
 @Composable
 fun ShoppingListApp(
     locationUtils: LocationUtils,
@@ -60,6 +84,10 @@ fun ShoppingListApp(
     context: Context,
     address: String
 ) {
+    // ARCH-FIXME: 이 앱의 핵심 데이터(쇼핑 목록)가 ViewModel 이 아니라 화면의 `remember` 에 있다.
+    //  화면 회전, 프로세스 종료, 다른 화면 이동 후 복귀에서 전부 사라진다.
+    //  ViewModel 은 이미 있는데 위치/주소만 담고 있어 역할 분담이 어긋나 있다.
+    //  고치기: 목록과 다이얼로그 입력 상태를 ViewModel 의 UiState 로 올린다.
     var sItems by remember { mutableStateOf(listOf<ShoppingItem>()) }
     var showDialog by remember { mutableStateOf(false) }
     var itemName by remember { mutableStateOf("") }
@@ -191,6 +219,10 @@ fun ShoppingListApp(
                         if (locationUtils.hasLocationPermission(context)) {
                             locationUtils.requestLocationUpdate(viewModel)
                             // TODO: [todos/android-navigation-navoptions-builder.md](../../../../../../../../todos/android-navigation-navoptions-builder.md)
+                            // FIXME: `this.launchSingleTop` 은 프로퍼티 값을 읽고 버리는 표현식이라
+                            //  아무 효과가 없다(컴파일 에러도 경고도 없다).
+                            //  의도한 "중복 쌓임 방지"가 동작하지 않아 버튼을 연타하면 다이얼로그가 겹쳐 쌓인다.
+                            //  고치기: 대입해야 한다. → `launchSingleTop = true`
                             navController.navigate("locationscreen") {
                                 this.launchSingleTop
                             }
