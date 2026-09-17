@@ -50,7 +50,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-// TODO: [todos/kotlin-optin-experimental-api.md](../../../../../../../../todos/kotlin-optin-experimental-api.md)
+// TODO: [todos/006-kotlin-optin-experimental-api.md](../../../../../../../../todos/006-kotlin-optin-experimental-api.md)
 // FIXME: 화면 상태 4개가 모두 `remember` 에 있어 화면 회전 시 목록이 통째로 사라진다.
 //  이 챕터의 학습 범위(상태 기초)로는 맞지만, 실제 앱이라면
 //  - 목록은 ViewModel 로 올리고
@@ -138,7 +138,7 @@ fun ShoppingListApp() {
                                 name = itemName,
                                 quantity = itemQuantity.toIntOrNull() ?: 0
                             )
-                            // TODO: [todos/compose-state-list-reference-change.md](../../../../../../../../todos/compose-state-list-reference-change.md)
+                            // TODO: [todos/037-compose-state-list-reference-change.md](../../../../../../../../todos/037-compose-state-list-reference-change.md)
                             sItems = sItems + newItem
                             showDialog = false
                             itemName = ""
@@ -225,7 +225,7 @@ fun ShoppingItemEditor(item: ShoppingItem, onEditComplete: (String, Int) -> Unit
                 onValueChange = { editName = it },
                 singleLine = true,
                 modifier = Modifier
-                    .wrapContentSize() // TODO: [todos/compose-wrapcontentsize-modifier.md](../../../../../../../../todos/compose-wrapcontentsize-modifier.md)
+                    .wrapContentSize() // TODO: [todos/031-compose-wrapcontentsize-modifier.md](../../../../../../../../todos/031-compose-wrapcontentsize-modifier.md)
                     .padding(8.dp)
             )
             OutlinedTextField(

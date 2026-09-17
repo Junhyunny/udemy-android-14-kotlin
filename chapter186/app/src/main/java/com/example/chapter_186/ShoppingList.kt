@@ -218,7 +218,7 @@ fun ShoppingListApp(
                     Button(onClick = {
                         if (locationUtils.hasLocationPermission(context)) {
                             locationUtils.requestLocationUpdate(viewModel)
-                            // TODO: [todos/android-navigation-navoptions-builder.md](../../../../../../../../todos/android-navigation-navoptions-builder.md)
+                            // TODO: [todos/072-android-navigation-navoptions-builder.md](../../../../../../../../todos/072-android-navigation-navoptions-builder.md)
                             // FIXME: `this.launchSingleTop` 은 프로퍼티 값을 읽고 버리는 표현식이라
                             //  아무 효과가 없다(컴파일 에러도 경고도 없다).
                             //  의도한 "중복 쌓임 방지"가 동작하지 않아 버튼을 연타하면 다이얼로그가 겹쳐 쌓인다.

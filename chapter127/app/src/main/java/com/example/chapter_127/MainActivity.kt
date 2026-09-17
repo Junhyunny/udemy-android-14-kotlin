@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            // TODO: [todos/compose-viewmodel-function-vs-manual.md](../../../../../../../../todos/compose-viewmodel-function-vs-manual.md)
+            // TODO: [todos/046-compose-viewmodel-function-vs-manual.md](../../../../../../../../todos/046-compose-viewmodel-function-vs-manual.md)
             Log.i("custom", "re-composable")
             // FIXME: ViewModel 을 `setContent` 안에서 직접 생성하고 있다. 두 가지가 깨진다.
             //  (1) 재구성될 때마다 새 인스턴스가 만들어진다 → `remember` 조차 걸려 있지 않다
@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // TODO: [todos/compose-recomposition-timing-and-scope.md](../../../../../../../../todos/compose-recomposition-timing-and-scope.md)
+                    // TODO: [todos/036-compose-recomposition-timing-and-scope.md](../../../../../../../../todos/036-compose-recomposition-timing-and-scope.md)
                     Log.i("custom", "Surface re-composable")
                     CounterApp(viewModel = viewModel)
                 }

@@ -38,11 +38,11 @@ fun LocationSelectionScreen(
             )
         )
     }
-    // TODO: [todos/compose-maps-marker-state-remember.md](../../../../../../../../todos/compose-maps-marker-state-remember.md)
+    // TODO: [todos/080-compose-maps-marker-state-remember.md](../../../../../../../../todos/080-compose-maps-marker-state-remember.md)
     // val markerState = rememberUpdatedMarkerState(
     //     position = userLocation.value
     // )
-    // TODO: [todos/compose-maps-camera-position-state.md](../../../../../../../../todos/compose-maps-camera-position-state.md)
+    // TODO: [todos/081-compose-maps-camera-position-state.md](../../../../../../../../todos/081-compose-maps-camera-position-state.md)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(userLocation.value, 10f)
     }

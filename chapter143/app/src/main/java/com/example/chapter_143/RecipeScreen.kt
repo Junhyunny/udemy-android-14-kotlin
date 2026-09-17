@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 
-// TODO: [todos/compose-navigation-prop-drilling.md](../../../../../../../../todos/compose-navigation-prop-drilling.md)
+// TODO: [todos/070-compose-navigation-prop-drilling.md](../../../../../../../../todos/070-compose-navigation-prop-drilling.md)
 @Composable
 fun RecipeScreen(
     modifier: Modifier = Modifier,
@@ -70,7 +70,7 @@ fun CategoryItem(category: Category, navigateToDetail: (Category) -> Unit) {
     ) {
         Image(
             painter = rememberAsyncImagePainter(category.strCategoryThumb),
-            // TODO: [todos/compose-image-content-description-null.md](../../../../../../../../todos/compose-image-content-description-null.md)
+            // TODO: [todos/039-compose-image-content-description-null.md](../../../../../../../../todos/039-compose-image-content-description-null.md)
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()

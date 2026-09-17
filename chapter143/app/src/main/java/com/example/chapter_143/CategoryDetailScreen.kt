@@ -26,7 +26,7 @@ fun CategoryDetailScreen(category: Category) {
     ) {
         Text(text = category.strCategory, textAlign = TextAlign.Center)
         Image(
-            // TODO: [todos/compose-remember-async-image-painter.md](../../../../../../../../todos/compose-remember-async-image-painter.md)
+            // TODO: [todos/040-compose-remember-async-image-painter.md](../../../../../../../../todos/040-compose-remember-async-image-painter.md)
             painter = rememberAsyncImagePainter(category.strCategoryThumb),
             contentDescription = "${category.strCategory}'s thumbnail",
             modifier = Modifier
@@ -36,7 +36,7 @@ fun CategoryDetailScreen(category: Category) {
         Text(
             text = category.strCategoryDescription,
             textAlign = TextAlign.Justify,
-            // TODO: [todos/compose-scroll-state-and-vertical-scroll.md](../../../../../../../../todos/compose-scroll-state-and-vertical-scroll.md)
+            // TODO: [todos/033-compose-scroll-state-and-vertical-scroll.md](../../../../../../../../todos/033-compose-scroll-state-and-vertical-scroll.md)
             modifier = Modifier.verticalScroll(
                 rememberScrollState()
             )

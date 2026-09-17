@@ -45,11 +45,11 @@ import java.math.RoundingMode
 * ComponentActivity 역할은 뭐야? 어떤 종류의 액티비티들이 있지? 각 액티비티들은 어떤 역할을 해?
 * */
 class MainActivity : ComponentActivity() {
-    // TODO: [todos/activity-lifecycle-callbacks-and-bundle.md](../../../../../../../../todos/activity-lifecycle-callbacks-and-bundle.md)
+    // TODO: [todos/019-activity-lifecycle-callbacks-and-bundle.md](../../../../../../../../todos/019-activity-lifecycle-callbacks-and-bundle.md)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // TODO: [todos/setcontent-and-compose-entry-point.md](../../../../../../../../todos/setcontent-and-compose-entry-point.md)
+        // TODO: [todos/026-setcontent-and-compose-entry-point.md](../../../../../../../../todos/026-setcontent-and-compose-entry-point.md)
         setContent {
             Chapter078Theme {
                 UnitConverter()
@@ -78,7 +78,7 @@ fun UnitConverter() {
         Unit("feets", BigDecimal("304.8")),
         Unit("meters", 1000.toBigDecimal()),
     )
-    // TODO: [todos/compose-remember-mutablestate-and-by.md](../../../../../../../../todos/compose-remember-mutablestate-and-by.md)
+    // TODO: [todos/034-compose-remember-mutablestate-and-by.md](../../../../../../../../todos/034-compose-remember-mutablestate-and-by.md)
     // FIXME: `inputUnit`(이름)과 `inConversionFactor`(배율)가 같은 사실을 두 곳에 나눠 저장한다.
     //  드롭다운에서 고를 때 둘을 각각 갱신해야 해서, 한쪽만 바꾸면 화면과 계산이 어긋난다.
     //  고치기: 선택된 `Unit` 객체 하나만 상태로 두고 배율은 거기서 읽는다.
@@ -99,31 +99,31 @@ fun UnitConverter() {
         val value = inputValue.toBigDecimalOrNull() ?: BigDecimal.ZERO
         return value
             .multiply(inConversionFactor.value)
-            // TODO: [todos/kotlin-bigdecimal-division-and-formatting.md](../../../../../../../../todos/kotlin-bigdecimal-division-and-formatting.md)
+            // TODO: [todos/005-kotlin-bigdecimal-division-and-formatting.md](../../../../../../../../todos/005-kotlin-bigdecimal-division-and-formatting.md)
             .divide(outConversionFactor.value, MathContext(10, RoundingMode.HALF_UP))
-            // TODO: [todos/kotlin-bigdecimal-division-and-formatting.md](../../../../../../../../todos/kotlin-bigdecimal-division-and-formatting.md)
+            // TODO: [todos/005-kotlin-bigdecimal-division-and-formatting.md](../../../../../../../../todos/005-kotlin-bigdecimal-division-and-formatting.md)
             .stripTrailingZeros()
     }
 
-    // TODO: [todos/compose-column-and-row-layout.md](../../../../../../../../todos/compose-column-and-row-layout.md)
+    // TODO: [todos/028-compose-column-and-row-layout.md](../../../../../../../../todos/028-compose-column-and-row-layout.md)
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
-        // TODO: [todos/android-dp-unit.md](../../../../../../../../todos/android-dp-unit.md)
+        // TODO: [todos/016-android-dp-unit.md](../../../../../../../../todos/016-android-dp-unit.md)
         // padding(10.dp, 75.dp)
     ) {
         Text("Unit Converter", style = MaterialTheme.typography.headlineLarge)
-        // TODO: [todos/compose-padding-vs-spacer.md](../../../../../../../../todos/compose-padding-vs-spacer.md)
+        // TODO: [todos/030-compose-padding-vs-spacer.md](../../../../../../../../todos/030-compose-padding-vs-spacer.md)
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
             value = inputValue,
             onValueChange = { inputValue = it },
             label = { Text("value") })
         Spacer(modifier = Modifier.height(16.dp))
-        // TODO: [todos/compose-column-and-row-layout.md](../../../../../../../../todos/compose-column-and-row-layout.md)
+        // TODO: [todos/028-compose-column-and-row-layout.md](../../../../../../../../todos/028-compose-column-and-row-layout.md)
         Row {
-            // TODO: [todos/compose-box-usage.md](../../../../../../../../todos/compose-box-usage.md)
+            // TODO: [todos/029-compose-box-usage.md](../../../../../../../../todos/029-compose-box-usage.md)
             Box {
                 Button(onClick = { isInputExpand = true }) {
                     Text(inputUnit.ifEmpty { "select" })
@@ -133,7 +133,7 @@ fun UnitConverter() {
                     expanded = isInputExpand,
                     onDismissRequest = { isInputExpand = false }) {
                     for (unit in units) {
-                        // TODO: [todos/compose-list-item-key.md](../../../../../../../../todos/compose-list-item-key.md)
+                        // TODO: [todos/038-compose-list-item-key.md](../../../../../../../../todos/038-compose-list-item-key.md)
                         DropdownMenuItem(
                             text = { Text(unit.value) },
                             onClick = {
@@ -156,7 +156,7 @@ fun UnitConverter() {
                     onDismissRequest = { isOutputExpand = false }
                 ) {
                     for (unit in units) {
-                        // TODO: [todos/compose-list-item-key.md](../../../../../../../../todos/compose-list-item-key.md)
+                        // TODO: [todos/038-compose-list-item-key.md](../../../../../../../../todos/038-compose-list-item-key.md)
                         DropdownMenuItem(
                             text = { Text(unit.value) },
                             onClick = {
@@ -168,10 +168,10 @@ fun UnitConverter() {
                     }
                 }
             }
-            // TODO: [todos/compose-localcontext.md](../../../../../../../../todos/compose-localcontext.md)
+            // TODO: [todos/021-compose-localcontext.md](../../../../../../../../todos/021-compose-localcontext.md)
             // val context = LocalContext.current
             // Button(onClick = {
-            //     // TODO: [todos/android-context-and-toast.md](../../../../../../../../todos/android-context-and-toast.md)
+            //     // TODO: [todos/022-android-context-and-toast.md](../../../../../../../../todos/022-android-context-and-toast.md)
             //     Toast.makeText(
             //         context, "Thanks for clicking", Toast.LENGTH_LONG
             //     ).show()
@@ -182,7 +182,7 @@ fun UnitConverter() {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             "Result: ${convertValue().toPlainString()} $outputUnit",
-            // TODO: [todos/android-dp-unit.md](../../../../../../../../todos/android-dp-unit.md)
+            // TODO: [todos/016-android-dp-unit.md](../../../../../../../../todos/016-android-dp-unit.md)
             // fontSize = 20.sp
             style = TextStyle(
                 fontFamily = FontFamily.Default,
@@ -195,8 +195,8 @@ fun UnitConverter() {
 
 // FIXME: `Greeting` 과 `GreetingPreview` 는 프로젝트 템플릿이 만든 코드로, 이 앱에서 아무도 쓰지 않는다.
 //  죽은 코드는 "쓰이는 코드"를 찾는 비용을 늘린다. 고치기: 둘 다 삭제한다.
-// TODO: [todos/composable-annotation-and-recomposition.md](../../../../../../../../todos/composable-annotation-and-recomposition.md)
-// TODO: [todos/compose-rendering-pipeline.md](../../../../../../../../todos/compose-rendering-pipeline.md)
+// TODO: [todos/025-composable-annotation-and-recomposition.md](../../../../../../../../todos/025-composable-annotation-and-recomposition.md)
+// TODO: [todos/027-compose-rendering-pipeline.md](../../../../../../../../todos/027-compose-rendering-pipeline.md)
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(

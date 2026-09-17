@@ -46,8 +46,8 @@ fun Navigation() {
     val viewModel: LocationViewModel = viewModel()
     val context = LocalContext.current
     val locationUtils = LocationUtils(context)
-    // TODO: [todos/android-navigation-package-compose-vs-runtime.md](../../../../../../../../todos/android-navigation-package-compose-vs-runtime.md)
-    // TODO: [todos/android-navigation-navhost-composable-dialog.md](../../../../../../../../todos/android-navigation-navhost-composable-dialog.md)
+    // TODO: [todos/064-android-navigation-package-compose-vs-runtime.md](../../../../../../../../todos/064-android-navigation-package-compose-vs-runtime.md)
+    // TODO: [todos/065-android-navigation-navhost-composable-dialog.md](../../../../../../../../todos/065-android-navigation-navhost-composable-dialog.md)
     NavHost(
         navController = navController,
         startDestination = "shoppinglistscreen"

@@ -58,7 +58,7 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation("androidx.lifecycle:lifecycle-viewmodel-navigation3")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx")
-    // TODO: [todos/android-room-architecture.md](../../todos/android-room-architecture.md)
+    // TODO: [todos/060-android-room-architecture.md](../../todos/060-android-room-architecture.md)
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")

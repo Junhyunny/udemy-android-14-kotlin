@@ -1,6 +1,6 @@
 package com.example.chapter_171
 
-// TODO: [todos/android-play-services-location-dependency.md](../../../../../../../../todos/android-play-services-location-dependency.md)
+// TODO: [todos/078-android-play-services-location-dependency.md](../../../../../../../../todos/078-android-play-services-location-dependency.md)
 import android.Manifest.permission
 import android.annotation.SuppressLint
 import android.content.Context
@@ -23,7 +23,7 @@ class LocationUtils(val context: Context) {
     private val fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(context)
 
-    // TODO: [todos/android-requires-permission-annotation.md](../../../../../../../../todos/android-requires-permission-annotation.md)
+    // TODO: [todos/075-android-requires-permission-annotation.md](../../../../../../../../todos/075-android-requires-permission-annotation.md)
 //    @RequiresPermission(allOf = [permission.ACCESS_FINE_LOCATION, permission.ACCESS_COARSE_LOCATION])
     // FIXME: 하위 유틸리티가 상위 계층인 `LocationViewModel` 을 파라미터로 받는다. 의존 방향이 거꾸로다.
     //  이 클래스는 다른 화면에서 재사용할 수도, 테스트할 수도 없다.
@@ -50,7 +50,7 @@ class LocationUtils(val context: Context) {
         //  고치기: 용도에 맞춰 낮춘다. 예) Priority.PRIORITY_BALANCED_POWER_ACCURACY, 10_000L
         //  일회성 조회면 `getCurrentLocation()` 이나 `lastLocation` 으로 충분하다.
         val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 100).build()
-        // TODO: [todos/android-fused-location-provider-and-looper.md](../../../../../../../../todos/android-fused-location-provider-and-looper.md)
+        // TODO: [todos/079-android-fused-location-provider-and-looper.md](../../../../../../../../todos/079-android-fused-location-provider-and-looper.md)
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
             locationCallback,

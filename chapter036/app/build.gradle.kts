@@ -1,6 +1,6 @@
-// TODO: [todos/gradle-build-files-in-android-project.md](../../todos/gradle-build-files-in-android-project.md)
+// TODO: [todos/008-gradle-build-files-in-android-project.md](../../todos/008-gradle-build-files-in-android-project.md)
 plugins {
-    // TODO: [todos/android-application-plugin-role.md](../../todos/android-application-plugin-role.md)
+    // TODO: [todos/009-android-application-plugin-role.md](../../todos/009-android-application-plugin-role.md)
     alias(libs.plugins.android.application)
 }
 

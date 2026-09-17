@@ -90,12 +90,12 @@ fun MainView() {
     val modifier = if (isSheetFullScreen) Modifier.fillMaxSize() else Modifier.fillMaxWidth()
     val roundedCornerRadius = if (isSheetFullScreen) 0.dp else 12.dp
     val bottomBar: @Composable () -> Unit = {
-        // TODO: [todos/kotlin-is-operator-and-smart-cast.md](../../../../../../../../todos/kotlin-is-operator-and-smart-cast.md)
+        // TODO: [todos/001-kotlin-is-operator-and-smart-cast.md](../../../../../../../../todos/001-kotlin-is-operator-and-smart-cast.md)
         if (currentScreen is Screen.DrawerScreen || currentScreen == Screen.BottomBarScreen.Home) {
             NavigationBar(modifier = Modifier.wrapContentSize()) {
                 screensInBottom.forEach { item ->
                     val isSelected = currentRoute == item.bRoute
-                    // TODO: [todos/compose-icon-tint-vs-component-colors.md](../../../../../../../../todos/compose-icon-tint-vs-component-colors.md)
+                    // TODO: [todos/041-compose-icon-tint-vs-component-colors.md](../../../../../../../../todos/041-compose-icon-tint-vs-component-colors.md)
                     val tint = if (isSelected) Color.Red else Color.Black
                     NavigationBarItem(
                         selected = currentRoute == item.bRoute,
@@ -201,7 +201,7 @@ fun MainView() {
                     },
                     actions = {
                         IconButton(onClick = {
-                            // TODO: [todos/compose-modal-bottom-sheet-state-and-sheetstate.md](../../../../../../../../todos/compose-modal-bottom-sheet-state-and-sheetstate.md)
+                            // TODO: [todos/044-compose-modal-bottom-sheet-state-and-sheetstate.md](../../../../../../../../todos/044-compose-modal-bottom-sheet-state-and-sheetstate.md)
                             showBottomSheet = true
                             scope.launch {
                                 if (sheetState.isVisible) {

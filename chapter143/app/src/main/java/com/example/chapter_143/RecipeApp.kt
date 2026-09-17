@@ -33,7 +33,7 @@ fun RecipeApp(navController: NavHostController) {
     ) {
         composable(route = Screen.RecipeScreen.route) {
             RecipeScreen(viewState = viewState) {
-                // TODO: [todos/android-navigation-backstackentry-savedstatehandle.md](../../../../../../../../todos/android-navigation-backstackentry-savedstatehandle.md)
+                // TODO: [todos/069-android-navigation-backstackentry-savedstatehandle.md](../../../../../../../../todos/069-android-navigation-backstackentry-savedstatehandle.md)
                 navController.currentBackStackEntry?.savedStateHandle?.set("cat", it)
                 navController.navigate(Screen.DetailScreen.route)
             }

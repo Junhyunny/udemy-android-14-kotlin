@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
 //  내비게이션 학습이 목적이라 의도된 구성이지만, 회전 시 입력이 사라지는 한계가 있다.
 @Composable
 fun MyApp() {
-    // TODO: [todos/android-navigation-string-route-vs-type-safe.md](../../../../../../../../todos/android-navigation-string-route-vs-type-safe.md)
+    // TODO: [todos/066-android-navigation-string-route-vs-type-safe.md](../../../../../../../../todos/066-android-navigation-string-route-vs-type-safe.md)
     val navController = rememberNavController()
     NavHost(
         navController = navController, startDestination = "firstScreen"
@@ -49,7 +49,7 @@ fun MyApp() {
                 navController.navigate("secondScreen/${name}/${age}")
             }
         }
-        // TODO: [todos/android-navigation-passing-many-arguments.md](../../../../../../../../todos/android-navigation-passing-many-arguments.md)
+        // TODO: [todos/068-android-navigation-passing-many-arguments.md](../../../../../../../../todos/068-android-navigation-passing-many-arguments.md)
         composable(route = "secondScreen/{name}/{age}") {
             val name = it.arguments?.getString("name") ?: "no name"
             val ageString = it.arguments?.getString("age") ?: "0"

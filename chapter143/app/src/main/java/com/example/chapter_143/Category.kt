@@ -3,7 +3,7 @@ package com.example.chapter_143
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-// TODO: [todos/android-parcelable-vs-serializable.md](../../../../../../../../todos/android-parcelable-vs-serializable.md)
+// TODO: [todos/024-android-parcelable-vs-serializable.md](../../../../../../../../todos/024-android-parcelable-vs-serializable.md)
 @Parcelize
 data class Category(
     val idCategory: String,

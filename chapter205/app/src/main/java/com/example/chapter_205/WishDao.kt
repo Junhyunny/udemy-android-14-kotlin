@@ -9,13 +9,13 @@ import androidx.room.Update
 import com.example.chapter_205.data.Wish
 import kotlinx.coroutines.flow.Flow
 
-// TODO: [todos/android-room-dao-code-generation.md](../../../../../../../../todos/android-room-dao-code-generation.md)
+// TODO: [todos/061-android-room-dao-code-generation.md](../../../../../../../../todos/061-android-room-dao-code-generation.md)
 @Dao
 abstract class WishDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun addWish(wish: Wish)
 
-    // TODO: [todos/kotlin-flow-concepts-and-suspend.md](../../../../../../../../todos/kotlin-flow-concepts-and-suspend.md)
+    // TODO: [todos/057-kotlin-flow-concepts-and-suspend.md](../../../../../../../../todos/057-kotlin-flow-concepts-and-suspend.md)
     @Query("select * from `wish-table`")
     abstract fun getAll(): Flow<List<Wish>>
 

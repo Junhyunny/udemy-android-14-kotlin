@@ -40,9 +40,9 @@ class MainViewModel : ViewModel() {
     }
 
     private fun fetchCategories() {
-        // TODO: [todos/android-viewmodelscope-launch-necessity.md](../../../../../../../../todos/android-viewmodelscope-launch-necessity.md)
+        // TODO: [todos/056-android-viewmodelscope-launch-necessity.md](../../../../../../../../todos/056-android-viewmodelscope-launch-necessity.md)
         viewModelScope.launch {
-            // TODO: [todos/kotlin-coroutines-exception-handling-try-catch.md](../../../../../../../../todos/kotlin-coroutines-exception-handling-try-catch.md)
+            // TODO: [todos/055-kotlin-coroutines-exception-handling-try-catch.md](../../../../../../../../todos/055-kotlin-coroutines-exception-handling-try-catch.md)
             try {
                 val response = recipieService.getCategories()
                 _categoriesState.value = _categoriesState.value.copy(

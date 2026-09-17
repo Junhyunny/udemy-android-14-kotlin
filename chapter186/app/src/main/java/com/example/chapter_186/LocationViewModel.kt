@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 //  화면 회전 한 번으로 목록이 전부 사라진다.
 //  고치기: 쇼핑 목록 상태를 ViewModel 로 올리고, 위치/주소는 별도 ViewModel 이나 UiState 필드로 둔다.
 class LocationViewModel : ViewModel() {
-    // TODO: [todos/android-viewmodel-state-exposure-patterns.md](../../../../../../../../todos/android-viewmodel-state-exposure-patterns.md)
+    // TODO: [todos/047-android-viewmodel-state-exposure-patterns.md](../../../../../../../../todos/047-android-viewmodel-state-exposure-patterns.md)
     // FIXME: `_` 로 숨겼는데 공개 타입이 `MutableState` 라 캡슐화가 성립하지 않는다.
     //  화면에서 `viewModel.location.value = ...` 로 직접 대입할 수 있다.
     //  고치기: 읽기 전용 타입으로 내린다. (chapter171 의 LocationViewModel 이 올바른 예다)
@@ -44,13 +44,13 @@ class LocationViewModel : ViewModel() {
         _location.value = newLocation
     }
 
-    // TODO: [todos/kotlin-coroutines-exception-handling-try-catch.md](../../../../../../../../todos/kotlin-coroutines-exception-handling-try-catch.md)
+    // TODO: [todos/055-kotlin-coroutines-exception-handling-try-catch.md](../../../../../../../../todos/055-kotlin-coroutines-exception-handling-try-catch.md)
     fun fetchAddress(latLng: String) {
         viewModelScope.launch {
             try {
                 val result = RetrofitClient.create().getAddressFromCoordinate(
                     latLng,
-                    // TODO: [todos/android-api-key-secure-management.md](../../../../../../../../todos/android-api-key-secure-management.md)
+                    // TODO: [todos/063-android-api-key-secure-management.md](../../../../../../../../todos/063-android-api-key-secure-management.md)
                     BuildConfig.MAPS_API_KEY
                 )
                 // FIXME: Google Geocoding API 는 HTTP 200 을 주면서 본문 `status` 로 실패를 알린다.

@@ -63,7 +63,7 @@ fun AddEditDetailView(
     val snackMessage = remember {
         mutableStateOf("")
     }
-    // TODO: [todos/kotlin-coroutine-scope-concept.md](../../../../../../../../todos/kotlin-coroutine-scope-concept.md)
+    // TODO: [todos/053-kotlin-coroutine-scope-concept.md](../../../../../../../../todos/053-kotlin-coroutine-scope-concept.md)
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     // FIXME: 이 프로젝트에서 가장 큰 문제. 컴포지션 "도중에" ViewModel 상태를 쓰고 있다.
@@ -84,7 +84,7 @@ fun AddEditDetailView(
     //      }
     //  더 나은 구조는 화면이 아니라 ViewModel 이 id 를 받아 스스로 불러오게 하는 것이다.
     if (id != 0L) {
-        // TODO: [todos/android-viewmodel-encapsulation-and-async-timing.md](../../../../../../../../todos/android-viewmodel-encapsulation-and-async-timing.md)
+        // TODO: [todos/048-android-viewmodel-encapsulation-and-async-timing.md](../../../../../../../../todos/048-android-viewmodel-encapsulation-and-async-timing.md)
         val wish = viewModel.getWishById(id).collectAsState(
             initial = Wish(0L, "", "")
         )
@@ -101,7 +101,7 @@ fun AddEditDetailView(
                     R.string.add_wish
                 )
             ) {
-                // TODO: [todos/android-navigation-popbackstack-vs-navigateup.md](../../../../../../../../todos/android-navigation-popbackstack-vs-navigateup.md)
+                // TODO: [todos/071-android-navigation-popbackstack-vs-navigateup.md](../../../../../../../../todos/071-android-navigation-popbackstack-vs-navigateup.md)
                 // navController.popBackStack()
                 navController.navigateUp()
             }
@@ -137,7 +137,7 @@ fun AddEditDetailView(
                 } else {
                     snackMessage.value = "Enter fields to create a wish"
                 }
-                // TODO: [todos/android-viewmodel-encapsulation-and-async-timing.md](../../../../../../../../todos/android-viewmodel-encapsulation-and-async-timing.md)
+                // TODO: [todos/048-android-viewmodel-encapsulation-and-async-timing.md](../../../../../../../../todos/048-android-viewmodel-encapsulation-and-async-timing.md)
                 // FIXME: `showSnackbar` 는 스낵바가 사라질 때까지 중단되는 suspend 함수다.
                 //  그 다음 줄의 `navigateUp()` 은 스낵바가 닫힌 뒤에야 실행되므로
                 //  저장 후 화면이 한참 뒤에 닫힌다(사용자에게는 멈춘 것처럼 보인다).

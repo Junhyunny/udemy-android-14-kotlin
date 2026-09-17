@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chapter186">
 
-        <!-- TODO: [todos/android-api-key-secure-management.md](../../../../todos/android-api-key-secure-management.md) -->
+        <!-- TODO: [todos/063-android-api-key-secure-management.md](../../../../todos/063-android-api-key-secure-management.md) -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />

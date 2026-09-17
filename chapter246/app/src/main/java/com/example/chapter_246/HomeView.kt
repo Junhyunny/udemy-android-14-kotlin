@@ -38,7 +38,7 @@ fun HomeView() {
     ).groupBy { it[0] }
     LazyColumn {
         grouped.forEach { (key, values) ->
-            // TODO: [todos/compose-lazy-list-sticky-header.md](../../../../../../../../todos/compose-lazy-list-sticky-header.md)
+            // TODO: [todos/043-compose-lazy-list-sticky-header.md](../../../../../../../../todos/043-compose-lazy-list-sticky-header.md)
             stickyHeader {
                 Text(text = values[0], modifier = Modifier.padding(16.dp))
                 LazyRow {

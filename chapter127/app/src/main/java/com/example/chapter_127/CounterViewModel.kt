@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-// TODO: [todos/android-viewmodel-role-and-remember.md](../../../../../../../../todos/android-viewmodel-role-and-remember.md)
+// TODO: [todos/045-android-viewmodel-role-and-remember.md](../../../../../../../../todos/045-android-viewmodel-role-and-remember.md)
 // ARCH-FIXME: 이 챕터는 MVVM 세 계층이 형태만 갖춰져 있고 실제로는 연결이 끊겨 있다.
 //      Model(CounterRepository) — 존재하지만 호출이 주석 처리돼 아무도 쓰지 않는다
 //      ViewModel                — repository 를 받아 놓고 자체 상태만 증감시킨다
@@ -32,7 +32,7 @@ class CounterViewModel(private val repository: CounterRepository) : ViewModel() 
 
     fun increment() {
         _count.value++
-        // TODO: [todos/android-repository-single-source-of-truth.md](../../../../../../../../todos/android-repository-single-source-of-truth.md)
+        // TODO: [todos/049-android-repository-single-source-of-truth.md](../../../../../../../../todos/049-android-repository-single-source-of-truth.md)
 //        repository.incrementCounter()
     }
 

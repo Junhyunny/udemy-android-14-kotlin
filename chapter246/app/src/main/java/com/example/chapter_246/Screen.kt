@@ -3,7 +3,7 @@ package com.example.chapter_246
 import androidx.annotation.DrawableRes
 
 sealed class Screen(val title: String, val route: String) {
-    // TODO: [todos/android-drawable-res-annotation.md](../../../../../../../../todos/android-drawable-res-annotation.md)
+    // TODO: [todos/015-android-drawable-res-annotation.md](../../../../../../../../todos/015-android-drawable-res-annotation.md)
     sealed class DrawerScreen(val dTitle: String, val dRoute: String, @DrawableRes val icon: Int) :
         Screen(dTitle, dRoute) {
         object Account : DrawerScreen(

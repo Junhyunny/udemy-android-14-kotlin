@@ -3,7 +3,7 @@ package com.example.chapter_186
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-// TODO: [todos/android-retrofit-interface-proxy.md](../../../../../../../../todos/android-retrofit-interface-proxy.md)
+// TODO: [todos/062-android-retrofit-interface-proxy.md](../../../../../../../../todos/062-android-retrofit-interface-proxy.md)
 interface GeocodingApiService {
 
     // FIXME: API 키를 모든 함수의 파라미터로 받고 있다. 함수가 늘어날수록 반복된다.

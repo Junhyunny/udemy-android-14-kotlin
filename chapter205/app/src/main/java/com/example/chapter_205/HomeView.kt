@@ -46,9 +46,9 @@ fun HomeView(
 ) {
     // FIXME: `context` 를 선언만 하고 아무 데서도 쓰지 않는다. 죽은 코드다.
     //  `LocalContext.current` 는 컴포지션 로컬 조회 비용도 있으니 지우는 게 맞다.
-    // TODO: [todos/compose-localcontext.md](../../../../../../../../todos/compose-localcontext.md)
+    // TODO: [todos/021-compose-localcontext.md](../../../../../../../../todos/021-compose-localcontext.md)
     val context = LocalContext.current
-    // TODO: [todos/compose-scaffold.md](../../../../../../../../todos/compose-scaffold.md)
+    // TODO: [todos/032-compose-scaffold.md](../../../../../../../../todos/032-compose-scaffold.md)
     Scaffold(
         topBar = {
             AppBarView(title = "Wish List")
@@ -66,7 +66,7 @@ fun HomeView(
             }
         },
     ) { paddingValues ->
-        // TODO: [todos/compose-collectasstate-flow-to-state.md](../../../../../../../../todos/compose-collectasstate-flow-to-state.md)
+        // TODO: [todos/058-compose-collectasstate-flow-to-state.md](../../../../../../../../todos/058-compose-collectasstate-flow-to-state.md)
         // FIXME: `collectAsState` 는 화면이 백그라운드로 가도 수집을 멈추지 않는다.
         //  고치기: 라이프사이클을 인식하는 쪽을 쓴다.
         //      viewModel.getAllWishes.collectAsStateWithLifecycle(initialValue = emptyList())
@@ -86,7 +86,7 @@ fun HomeView(
                         totalDistance * 0.5f
                     },
                 )
-                // TODO: [todos/compose-launchedeffect-and-snapshotflow.md](../../../../../../../../todos/compose-launchedeffect-and-snapshotflow.md)
+                // TODO: [todos/059-compose-launchedeffect-and-snapshotflow.md](../../../../../../../../todos/059-compose-launchedeffect-and-snapshotflow.md)
                 LaunchedEffect(dismissState) {
                     snapshotFlow { dismissState.currentValue }
                         .distinctUntilChanged()
@@ -97,7 +97,7 @@ fun HomeView(
                         }
                 }
                 SwipeToDismissBox(
-                    // TODO: [todos/compose-lazy-list-animate-item.md](../../../../../../../../todos/compose-lazy-list-animate-item.md)
+                    // TODO: [todos/042-compose-lazy-list-animate-item.md](../../../../../../../../todos/042-compose-lazy-list-animate-item.md)
                     //
                     // [고침 2] 카드에 있던 padding 을 여기(행 전체)로 올렸다.
                     // 이전에는 padding 이 WishItem 의 Card 에만 걸려 있어서

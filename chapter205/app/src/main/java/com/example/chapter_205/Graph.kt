@@ -35,12 +35,12 @@ import androidx.room.Room
 object Graph {
     lateinit var database: WishDatabase
 
-    // TODO: [todos/kotlin-by-lazy-delegate.md](../../../../../../../../todos/kotlin-by-lazy-delegate.md)
+    // TODO: [todos/004-kotlin-by-lazy-delegate.md](../../../../../../../../todos/004-kotlin-by-lazy-delegate.md)
     val wishRepository by lazy {
         WishRepository(database.wishDao())
     }
 
-    // TODO: [todos/android-context-types-and-application-context.md](../../../../../../../../todos/android-context-types-and-application-context.md)
+    // TODO: [todos/020-android-context-types-and-application-context.md](../../../../../../../../todos/020-android-context-types-and-application-context.md)
     fun provide(context: Context) {
         database = Room.databaseBuilder(context, WishDatabase::class.java, "wishlist.db").build()
     }

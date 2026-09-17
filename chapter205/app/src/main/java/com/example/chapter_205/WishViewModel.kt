@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 //      fun loadWish(id: Long) { viewModelScope.launch { _uiState.update { ... } } }
 //      val uiState: StateFlow<WishUiState>
 class WishViewModel(
-    // TODO: [todos/android-manual-di-graph-object.md](../../../../../../../../todos/android-manual-di-graph-object.md)
+    // TODO: [todos/050-android-manual-di-graph-object.md](../../../../../../../../todos/050-android-manual-di-graph-object.md)
     private val wishRepository: WishRepository = Graph.wishRepository
 ) : ViewModel() {
     // FIXME: `var` + `MutableState` 라 두 겹으로 열려 있다.
@@ -53,7 +53,7 @@ class WishViewModel(
     lateinit var getAllWishes: Flow<List<Wish>>
 
     init {
-        // TODO: [todos/android-viewmodelscope-launch-necessity.md](../../../../../../../../todos/android-viewmodelscope-launch-necessity.md)
+        // TODO: [todos/056-android-viewmodelscope-launch-necessity.md](../../../../../../../../todos/056-android-viewmodelscope-launch-necessity.md)
         viewModelScope.launch {
             getAllWishes = wishRepository.getAllWishes()
         }
@@ -77,7 +77,7 @@ class WishViewModel(
     //      @Delete suspend fun deleteWish(wish: Wish)
     //  (Flow 를 반환하는 getAll/getWishById 는 지금처럼 non-suspend 가 맞다)
     fun addWish(wish: Wish) {
-        // TODO: [todos/kotlin-coroutine-dispatchers.md](../../../../../../../../todos/kotlin-coroutine-dispatchers.md)
+        // TODO: [todos/054-kotlin-coroutine-dispatchers.md](../../../../../../../../todos/054-kotlin-coroutine-dispatchers.md)
         viewModelScope.launch(Dispatchers.IO) {
             wishRepository.addWish(wish = wish)
         }

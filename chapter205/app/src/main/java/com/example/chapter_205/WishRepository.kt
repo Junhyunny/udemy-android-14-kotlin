@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.Flow
 //  테스트에서 가짜 repository 를 쓰려면 `interface WishRepository` 와
 //  `class DefaultWishRepository(dao) : WishRepository` 로 나눈다.
 //  (다만 구현이 하나뿐이고 학습용이라면 지금 상태도 과하지 않다. 우선순위는 낮다.)
-// TODO: [todos/kotlin-flow-concepts-and-suspend.md](../../../../../../../../todos/kotlin-flow-concepts-and-suspend.md)
+// TODO: [todos/057-kotlin-flow-concepts-and-suspend.md](../../../../../../../../todos/057-kotlin-flow-concepts-and-suspend.md)
 class WishRepository(private val wishDao: WishDao) {
 
     suspend fun addWish(wish: Wish) {

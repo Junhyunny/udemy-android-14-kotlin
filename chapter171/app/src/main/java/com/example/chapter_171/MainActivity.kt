@@ -70,12 +70,12 @@ fun LocationDisplay(
     val address = location.value?.let {
         locationUtils.reverseGeocodeLocation(location = it)
     }
-    // TODO: [todos/android-activity-result-api-and-launcher.md](../../../../../../../../todos/android-activity-result-api-and-launcher.md)
+    // TODO: [todos/074-android-activity-result-api-and-launcher.md](../../../../../../../../todos/074-android-activity-result-api-and-launcher.md)
     val requestPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
     ) { permissions ->
         Log.i("testing", permissions.toString())
-        // TODO: [todos/android-location-permission-coarse-vs-fine.md](../../../../../../../../todos/android-location-permission-coarse-vs-fine.md)
+        // TODO: [todos/076-android-location-permission-coarse-vs-fine.md](../../../../../../../../todos/076-android-location-permission-coarse-vs-fine.md)
         // FIXME: `&&` 라서 사용자가 "대략적인 위치"만 허용한 경우를 완전 거부와 똑같이 취급한다.
         //  사용자는 권한을 줬는데 "권한이 필요합니다" 안내를 받게 된다.
         //  공식 권장은 세 갈래 분기다.
@@ -90,7 +90,7 @@ fun LocationDisplay(
             Log.i("testing", "here can you see?")
             locationUtils.requestLocationUpdate(viewModel = viewModel)
         } else {
-            // TODO: [todos/android-should-show-request-permission-rationale.md](../../../../../../../../todos/android-should-show-request-permission-rationale.md)
+            // TODO: [todos/077-android-should-show-request-permission-rationale.md](../../../../../../../../todos/077-android-should-show-request-permission-rationale.md)
             // FIXME: `context as MainActivity` 는 안전하지 않은 캐스팅이다.
             //  `LocalContext.current` 가 항상 MainActivity 라는 보장이 없어(미리보기, ContextWrapper 등)
             //  `ClassCastException` 이 날 수 있다.

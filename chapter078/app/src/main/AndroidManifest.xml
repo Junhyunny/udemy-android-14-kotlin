@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!-- TODO: [todos/android-manifest-purpose.md](../../../../todos/android-manifest-purpose.md) -->
+    <!-- TODO: [todos/013-android-manifest-purpose.md](../../../../todos/013-android-manifest-purpose.md) -->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"

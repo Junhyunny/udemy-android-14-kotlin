@@ -6,8 +6,8 @@ import retrofit2.http.GET
 
 interface ApiService {
     @GET("categories.php")
-    // TODO: [todos/kotlin-coroutines-suspend-and-event-loop.md](../../../../../../../../todos/kotlin-coroutines-suspend-and-event-loop.md)
-    // TODO: [todos/kotlin-coroutines-continuation-state-machine.md](../../../../../../../../todos/kotlin-coroutines-continuation-state-machine.md)
+    // TODO: [todos/051-kotlin-coroutines-suspend-and-event-loop.md](../../../../../../../../todos/051-kotlin-coroutines-suspend-and-event-loop.md)
+    // TODO: [todos/052-kotlin-coroutines-continuation-state-machine.md](../../../../../../../../todos/052-kotlin-coroutines-continuation-state-machine.md)
     suspend fun getCategories(): CategoriesResponse
 }
 

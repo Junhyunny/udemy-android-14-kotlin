@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun CaptainGame() {
-        // TODO: [todos/compose-recomposition-timing-and-scope.md](../../../../../../../../todos/compose-recomposition-timing-and-scope.md)
+        // TODO: [todos/036-compose-recomposition-timing-and-scope.md](../../../../../../../../todos/036-compose-recomposition-timing-and-scope.md)
         /*
          * 이번엔 by 키워드가 안 쓰였는데, by 키워드가 있을 때 없을 떄 동작이 다른가? 어떤 부분이 다른지 설명해줘.
          * by 키워드를 사용하면 값을 그대로 꺼내서 사용하는데, 해당 변수의 값을 직접 변경하거나 하면 상태에 반영되나? 특히 다른 함수로 전달하면 참조가 이어지나? 프록시 객체야? 어떤지 알려줘.
@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
         //      DirectionButton(dir, onSail = { treasuresFound++ ; ... })
         // val treasuresFound = remember { mutableIntStateOf(0) }
         var treasuresFound by remember { mutableIntStateOf(0) }
-        // TODO: [todos/compose-state-storage-and-snapshot.md](../../../../../../../../todos/compose-state-storage-and-snapshot.md)
+        // TODO: [todos/035-compose-state-storage-and-snapshot.md](../../../../../../../../todos/035-compose-state-storage-and-snapshot.md)
         val direction = remember { mutableStateOf("North") }
         val stormOrTreasure = remember { mutableStateOf("") }
 

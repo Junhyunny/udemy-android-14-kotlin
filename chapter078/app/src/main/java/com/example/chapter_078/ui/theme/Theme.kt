@@ -38,7 +38,7 @@ fun Chapter078Theme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    // TODO: [todos/kotlin-trailing-lambda-and-content-slot.md](../../../../../../../../../../todos/kotlin-trailing-lambda-and-content-slot.md)
+    // TODO: [todos/002-kotlin-trailing-lambda-and-content-slot.md](../../../../../../../../../../todos/002-kotlin-trailing-lambda-and-content-slot.md)
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
