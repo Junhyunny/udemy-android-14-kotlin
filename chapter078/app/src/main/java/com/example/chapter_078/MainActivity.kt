@@ -58,11 +58,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// FIXME: 클래스 이름 `Unit` 이 코틀린 기본 타입 `kotlin.Unit` 을 가린다.
+//  이 파일 안에서는 함수의 반환 타입 `Unit` 을 쓸 수 없게 되고, 읽는 사람도 혼동한다.
+//  고치기: `LengthUnit` 처럼 의미가 드러나는 이름으로 바꾼다.
 data class Unit(
     val value: String,
     val factor: BigDecimal
 )
 
+// FIXME: 공개 컴포저블인데 `modifier: Modifier = Modifier` 파라미터가 없다.
+//  호출하는 쪽에서 여백·크기를 조절할 수 없어 재사용이 막힌다.
+//  Compose API 가이드라인은 modifier 를 "기본값 있는 첫 번째 선택 파라미터"로 두라고 안내한다.
+//  고치기: fun UnitConverter(modifier: Modifier = Modifier) 로 받아 최상위 Column 에 적용한다.
 @Composable
 fun UnitConverter() {
     val units = listOf(
@@ -72,6 +79,11 @@ fun UnitConverter() {
         Unit("meters", 1000.toBigDecimal()),
     )
     // TODO: [todos/compose-remember-mutablestate-and-by.md](../../../../../../../../todos/compose-remember-mutablestate-and-by.md)
+    // FIXME: `inputUnit`(이름)과 `inConversionFactor`(배율)가 같은 사실을 두 곳에 나눠 저장한다.
+    //  드롭다운에서 고를 때 둘을 각각 갱신해야 해서, 한쪽만 바꾸면 화면과 계산이 어긋난다.
+    //  고치기: 선택된 `Unit` 객체 하나만 상태로 두고 배율은 거기서 읽는다.
+    //      var inputUnit by remember { mutableStateOf<Unit?>(null) }
+    //      val factor = inputUnit?.factor ?: BigDecimal.ZERO
     var isInputExpand by remember { mutableStateOf(false) }
     var isOutputExpand by remember { mutableStateOf(false) }
     var inputValue by remember { mutableStateOf("") }
@@ -181,6 +193,8 @@ fun UnitConverter() {
     }
 }
 
+// FIXME: `Greeting` 과 `GreetingPreview` 는 프로젝트 템플릿이 만든 코드로, 이 앱에서 아무도 쓰지 않는다.
+//  죽은 코드는 "쓰이는 코드"를 찾는 비용을 늘린다. 고치기: 둘 다 삭제한다.
 // TODO: [todos/composable-annotation-and-recomposition.md](../../../../../../../../todos/composable-annotation-and-recomposition.md)
 // TODO: [todos/compose-rendering-pipeline.md](../../../../../../../../todos/compose-rendering-pipeline.md)
 @Composable
