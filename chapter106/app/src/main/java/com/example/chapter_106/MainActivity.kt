@@ -26,6 +26,11 @@ class MainActivity : ComponentActivity() {
 }
 
 
+// FIXME: 내용이 비어 있는 미리보기가 남아 있다. 아무것도 그리지 않으므로 존재 이유가 없다.
+//  고치기: 삭제하거나, 실제로 검증하고 싶은 화면을 넣는다.
+//      @Preview(showBackground = true)
+//      @Composable
+//      fun ShoppingListAppPreview() { Chapter106Theme { ShoppingListApp() } }
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
