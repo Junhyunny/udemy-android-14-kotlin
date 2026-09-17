@@ -44,6 +44,8 @@ fun HomeView(
     navController: NavController,
     viewModel: WishViewModel,
 ) {
+    // FIXME: `context` 를 선언만 하고 아무 데서도 쓰지 않는다. 죽은 코드다.
+    //  `LocalContext.current` 는 컴포지션 로컬 조회 비용도 있으니 지우는 게 맞다.
     // TODO: [todos/compose-localcontext.md](../../../../../../../../todos/compose-localcontext.md)
     val context = LocalContext.current
     // TODO: [todos/compose-scaffold.md](../../../../../../../../todos/compose-scaffold.md)
@@ -65,6 +67,10 @@ fun HomeView(
         },
     ) { paddingValues ->
         // TODO: [todos/compose-collectasstate-flow-to-state.md](../../../../../../../../todos/compose-collectasstate-flow-to-state.md)
+        // FIXME: `collectAsState` 는 화면이 백그라운드로 가도 수집을 멈추지 않는다.
+        //  고치기: 라이프사이클을 인식하는 쪽을 쓴다.
+        //      viewModel.getAllWishes.collectAsStateWithLifecycle(initialValue = emptyList())
+        //      (androidx.lifecycle:lifecycle-runtime-compose 의존성 필요)
         val wishList = viewModel.getAllWishes.collectAsState(initial = listOf())
         LazyColumn(
             modifier = Modifier

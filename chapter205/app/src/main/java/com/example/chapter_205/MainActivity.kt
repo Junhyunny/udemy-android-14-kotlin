@@ -22,6 +22,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// FIXME: 템플릿이 만든 `Greeting` / `GreetingPreview` 가 쓰이지 않은 채 남아 있다. 삭제 대상.
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(

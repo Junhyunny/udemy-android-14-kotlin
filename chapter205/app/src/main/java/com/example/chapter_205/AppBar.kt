@@ -22,6 +22,11 @@ fun AppBarView(
     onBackNavClick: () -> Unit = {}
 ) {
     val navigationIcon: @Composable (() -> Unit) = @Composable {
+        // FIXME: 화면 제목 문자열을 비교해서 뒤로 가기 버튼을 보일지 정하고 있다.
+        //  제목을 바꾸거나 다국어를 적용하는 순간 조용히 깨진다(문자열이 "Wish List" 가 아니게 되므로).
+        //  UI 동작을 표시 텍스트에 의존시키면 안 된다.
+        //  고치기: 의도를 파라미터로 받는다.
+        //      fun AppBarView(title: String, showBackButton: Boolean = false, onBackNavClick: () -> Unit = {})
         if (!title.contains("Wish List")) {
             IconButton(onClick = onBackNavClick) {
                 Icon(

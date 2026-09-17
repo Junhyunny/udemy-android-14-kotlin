@@ -31,6 +31,9 @@ fun Navigation(
                     nullable = false
                 }
             )) { entry ->
+            // FIXME: `if (entry.arguments != null)` 검사가 불필요하다.
+            //  뒤의 `?.` 와 `?: 0L` 이 이미 null 을 처리하므로 조건 전체가 중복이다.
+            //  고치기: `val id = entry.arguments?.getLong("id") ?: 0L`
             val id = if (entry.arguments != null) entry.arguments?.getLong("id") ?: 0L else 0L
             AddEditDetailView(id, navController, viewModel)
         }
