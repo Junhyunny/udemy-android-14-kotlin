@@ -52,6 +52,7 @@
 - [ ] [재구성은 언제, 어디까지 일어나는가](036-compose-recomposition-timing-and-scope.md)
 - [ ] [새 리스트를 대입했는데 재구성이 되는 이유](037-compose-state-list-reference-change.md)
 - [ ] [Compose는 반복 렌더링에 키가 필요 없는가](038-compose-list-item-key.md)
+- [ ] [자식에게 `MutableState`를 넘길까, 값과 콜백을 넘길까](082-compose-state-hoisting-and-callbacks.md)
 
 ## 6. Compose 컴포넌트 활용
 
