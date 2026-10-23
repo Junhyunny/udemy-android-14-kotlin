@@ -71,6 +71,7 @@
 - [ ] [화면에서 상태를 직접 바꾸는 게 맞나 — 비동기 실행 시점](048-android-viewmodel-encapsulation-and-async-timing.md)
 - [ ] [`Repository` 호출이 없어도 동작하는데 왜 필요한가](049-android-repository-single-source-of-truth.md)
 - [ ] [`Graph` object로 의존성을 주입하는 방식은 베스트 프랙티스인가](050-android-manual-di-graph-object.md)
+- [ ] [수동 DI에서 Hilt로 옮기면 무엇이 바뀌고, 테스트는 무엇을 준비해야 하나](083-android-hilt-migration-and-testing.md)
 
 ## 8. 코루틴과 반응형 상태
 
