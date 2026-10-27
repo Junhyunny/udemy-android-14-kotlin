@@ -262,8 +262,6 @@ LaunchedEffect(Unit) {
 }
 ```
 
-→ [`059-compose-launchedeffect-and-snapshotflow.md`](059-compose-launchedeffect-and-snapshotflow.md)
-
 ### 이 코드에서 다듬을 부분
 
 ```kotlin

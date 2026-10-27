@@ -115,8 +115,6 @@ Retrofit은 `invoke()`에서 **마지막 인자가 `Continuation`인지 확인**
 
 **즉 Retrofit은 코루틴을 특별히 아는 게 아니라, 컴파일된 형태를 알아보고 다리를 놓는 것이다.**
 
-→ [`052-kotlin-coroutines-continuation-state-machine.md`](052-kotlin-coroutines-continuation-state-machine.md)
-
 반환 타입에 따라 동작이 달라진다.
 
 | 선언 | 동작 |
@@ -126,8 +124,6 @@ Retrofit은 `invoke()`에서 **마지막 인자가 `Continuation`인지 확인**
 | `fun f(): Call<Foo>` | 콜백/동기 실행. 예전 방식 |
 
 **첫 번째 형태(지금 코드)는 비-2xx 응답에서 `HttpException`을 던진다.** 그래서 `try-catch`가 필수다.
-
-→ [`055-kotlin-coroutines-exception-handling-try-catch.md`](055-kotlin-coroutines-exception-handling-try-catch.md)
 
 ### `create()`를 매번 부르면 안 된다
 

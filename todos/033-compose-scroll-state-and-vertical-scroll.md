@@ -131,7 +131,7 @@ Button(onClick = { scope.launch { state.animateScrollTo(0) } }) {
 }
 ```
 
-`onClick`은 컴포저블이 아니라 일반 람다라서 `suspend` 함수를 직접 부를 수 없다. `rememberCoroutineScope()`가 필요한 이유다. → [`051-kotlin-coroutines-suspend-and-event-loop.md`](051-kotlin-coroutines-suspend-and-event-loop.md)
+`onClick`은 컴포저블이 아니라 일반 람다라서 `suspend` 함수를 직접 부를 수 없다. `rememberCoroutineScope()`가 필요한 이유다.
 
 ### 상태를 읽어 UI 만들기
 

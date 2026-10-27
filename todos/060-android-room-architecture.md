@@ -152,7 +152,7 @@ deleteWish() 호출
    → LazyColumn 재구성
 ```
 
-하이버네이트에는 이런 것이 없다. **모바일 UI에 특화된 설계**다. → [`057-kotlin-flow-concepts-and-suspend.md`](057-kotlin-flow-concepts-and-suspend.md)
+하이버네이트에는 이런 것이 없다. **모바일 UI에 특화된 설계**다.
 
 ### 데이터베이스 만들기
 
@@ -227,8 +227,6 @@ viewModelScope.launch(Dispatchers.IO) { wishRepository.addWish(wish) }
 @Insert abstract suspend fun addWish(wish: Wish)
 // → viewModelScope.launch { repository.addWish(wish) }  로 충분
 ```
-
-→ [`054-kotlin-coroutine-dispatchers.md`](054-kotlin-coroutine-dispatchers.md)
 
 ### 데이터 레이어 안에 가둔다
 

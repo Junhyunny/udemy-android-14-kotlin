@@ -132,8 +132,6 @@ LaunchedEffect(userLocation.value) {
 
 이렇게 하면 **마커가 옮겨질 때 카메라도 따라간다.** 지금 코드에 없는 동작이고, 필요한지는 UX 판단이다. 사용자가 지도를 스크롤해서 다른 곳을 보고 있는데 카메라가 멋대로 돌아오면 오히려 불편하다.
 
-→ [`059-compose-launchedeffect-and-snapshotflow.md`](059-compose-launchedeffect-and-snapshotflow.md)
-
 ### 카메라를 관찰하는 방법
 
 ```kotlin

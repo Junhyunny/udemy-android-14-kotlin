@@ -78,8 +78,6 @@ val currentOnClick by rememberUpdatedState(onClick)
 
 "객체의 정체성은 유지하되 내용은 최신으로 유지한다"는 패턴이다.
 
-→ [`059-compose-launchedeffect-and-snapshotflow.md`](059-compose-launchedeffect-and-snapshotflow.md)
-
 ### 이 코드를 고친다면
 
 **버전을 올릴 수 있다면:**

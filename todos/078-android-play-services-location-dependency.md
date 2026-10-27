@@ -187,7 +187,7 @@ val address = location.value?.let {
 }
 ```
 
-→ [`036-compose-recomposition-timing-and-scope.md`](036-compose-recomposition-timing-and-scope.md), [`054-kotlin-coroutine-dispatchers.md`](054-kotlin-coroutine-dispatchers.md)
+→ [`036-compose-recomposition-timing-and-scope.md`](036-compose-recomposition-timing-and-scope.md)
 
 ## 관련 아키텍처와 베스트 프랙티스
 
@@ -230,7 +230,7 @@ fun requestLocationUpdate(viewModel: LocationViewModel)
 fun locationUpdates(): Flow<LocationData>
 ```
 
-→ [`049-android-repository-single-source-of-truth.md`](049-android-repository-single-source-of-truth.md), [`057-kotlin-flow-concepts-and-suspend.md`](057-kotlin-flow-concepts-and-suspend.md)
+→ [`049-android-repository-single-source-of-truth.md`](049-android-repository-single-source-of-truth.md)
 
 ### 위치 기능은 권한·설정·가용성 세 가지를 모두 확인한다
 

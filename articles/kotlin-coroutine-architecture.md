@@ -48,7 +48,7 @@ suspend fun fetchName(): String = ...
 //  ^^^^^^^ 이 함수는 중간에 멈췄다가 나중에 이어서 실행될 수 있다
 ```
 
-`suspend`는 **비동기로 만들어 주는 키워드가 아니다.** "여기서 중단될 수 있다"는 표시일 뿐이고, 실제로 스레드를 옮기는 것은 디스패처, 동시에 실행하는 것은 `launch`/`async` 같은 [코루틴 빌더](https://kotlinlang.org/docs/coroutines-basics.html)다. 이 오해는 따로 정리해 뒀다. → [`051-kotlin-coroutines-suspend-and-event-loop.md`](../todos/051-kotlin-coroutines-suspend-and-event-loop.md)
+`suspend`는 **비동기로 만들어 주는 키워드가 아니다.** "여기서 중단될 수 있다"는 표시일 뿐이고, 실제로 스레드를 옮기는 것은 디스패처, 동시에 실행하는 것은 `launch`/`async` 같은 [코루틴 빌더](https://kotlinlang.org/docs/coroutines-basics.html)다.
 
 그래서 코틀린은 **"어디서 멈출 수 있는지 코드만 보고는 알기 어렵다"**는 단점이 있다. 대신 IntelliJ·Android Studio가 중단점이 있는 줄의 좌측 여백에 `⇅` 아이콘을 그려 준다.
 
@@ -141,8 +141,6 @@ withContext(Dispatchers.IO) {
     dao.addWish(wish)               // 블로킹 DAO 호출
 }
 ```
-
-디스패처를 자세히 나눠 정리한 문서는 따로 있다. → [`054-kotlin-coroutine-dispatchers.md`](../todos/054-kotlin-coroutine-dispatchers.md)
 
 ### 1.6. 워커 스레드 풀 - CoroutineScheduler
 
@@ -349,7 +347,7 @@ Thread Stack                          Heap (그대로 남는다)
 save$Cont ──completion──▶ add$Cont ──completion──▶ updateDatabase$Cont ──▶ launch 람다
 ```
 
-그래서 코루틴의 콜 스택은 **스레드에 있지 않고 힙에 있다.** 더 자세한 내용은 따로 정리해 뒀다. → [`052-kotlin-coroutines-continuation-state-machine.md`](../todos/052-kotlin-coroutines-continuation-state-machine.md)
+그래서 코루틴의 콜 스택은 **스레드에 있지 않고 힙에 있다.**
 
 ### 2.5. 어떻게 재개하는가
 
@@ -565,7 +563,7 @@ fun addWish(wish: Wish) {
 }
 ```
 
-`WishDao`의 메서드에 `suspend`가 없어서 **블로킹 호출**이기 때문에 `Dispatchers.IO`가 필요한 경우다. DAO에 `suspend`만 붙이면 Room이 알아서 자기 실행자에서 돌리고, `ViewModel`에서 디스패처 지정이 사라진다. → [`054-kotlin-coroutine-dispatchers.md`](../todos/054-kotlin-coroutine-dispatchers.md), [`060-android-room-architecture.md`](../todos/060-android-room-architecture.md)
+`WishDao`의 메서드에 `suspend`가 없어서 **블로킹 호출**이기 때문에 `Dispatchers.IO`가 필요한 경우다. DAO에 `suspend`만 붙이면 Room이 알아서 자기 실행자에서 돌리고, `ViewModel`에서 디스패처 지정이 사라진다. → [`060-android-room-architecture.md`](../todos/060-android-room-architecture.md)
 
 여기서 공식 베스트 프랙티스 한 줄을 기억해 두면 좋다.
 
@@ -591,7 +589,7 @@ Button(onClick = { scope.launch { sheetState.show() } }) { ... }
 val items by viewModel.items.collectAsState()
 ```
 
-**①이 구조적 동시성의 안드로이드 버전**이다. 컴포저블이 화면에서 사라지면 그 안에서 시작한 코루틴이 자동으로 취소된다. 따로 정리한 문서가 있다. → [`059-compose-launchedeffect-and-snapshotflow.md`](../todos/059-compose-launchedeffect-and-snapshotflow.md), [`058-compose-collectasstate-flow-to-state.md`](../todos/058-compose-collectasstate-flow-to-state.md)
+**①이 구조적 동시성의 안드로이드 버전**이다. 컴포저블이 화면에서 사라지면 그 안에서 시작한 코루틴이 자동으로 취소된다.
 
 ## 5. 공부 순서
 
@@ -630,16 +628,6 @@ val items by viewModel.items.collectAsState()
 
 - [Kotlin Docs: Debug coroutines using IntelliJ IDEA](https://kotlinlang.org/docs/debug-coroutines-with-idea.html)
 - [kotlinx.coroutines: Debugging coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/docs/topics/debugging.md)
-
-**이 저장소 안의 관련 문서**
-
-- [`051-kotlin-coroutines-suspend-and-event-loop.md`](../todos/051-kotlin-coroutines-suspend-and-event-loop.md) - `suspend`는 무엇이고, 코루틴은 이벤트 루프인가
-- [`052-kotlin-coroutines-continuation-state-machine.md`](../todos/052-kotlin-coroutines-continuation-state-machine.md) - CPS 변환과 상태 머신 상세
-- [`053-kotlin-coroutine-scope-concept.md`](../todos/053-kotlin-coroutine-scope-concept.md) - 코루틴 스코프
-- [`054-kotlin-coroutine-dispatchers.md`](../todos/054-kotlin-coroutine-dispatchers.md) - 디스패처 상세
-- [`055-kotlin-coroutines-exception-handling-try-catch.md`](../todos/055-kotlin-coroutines-exception-handling-try-catch.md) - 예외 처리
-- [`056-android-viewmodelscope-launch-necessity.md`](../todos/056-android-viewmodelscope-launch-necessity.md) - `viewModelScope`
-- [`057-kotlin-flow-concepts-and-suspend.md`](../todos/057-kotlin-flow-concepts-and-suspend.md) - `Flow`
 
 ## CLOSING
 

@@ -758,7 +758,7 @@ class DefaultItemRepository(
 }
 ```
 
-`ItemRepository`를 인터페이스로 둔 이유는 테스트다. `ViewModel`은 인터페이스만 알고, 테스트에서는 네트워크 없이 즉시 답하는 가짜 구현(5.5절)을 넣는다. 디스패처도 생성자로 받는다. 기본값은 `Dispatchers.IO`지만 테스트에서는 테스트 디스패처로 바꿀 수 있다. → [`054-kotlin-coroutine-dispatchers.md`](../todos/054-kotlin-coroutine-dispatchers.md)
+`ItemRepository`를 인터페이스로 둔 이유는 테스트다. `ViewModel`은 인터페이스만 알고, 테스트에서는 네트워크 없이 즉시 답하는 가짜 구현(5.5절)을 넣는다. 디스패처도 생성자로 받는다. 기본값은 `Dispatchers.IO`지만 테스트에서는 테스트 디스패처로 바꿀 수 있다.
 
 **② 컨테이너 — 앱 스코프 객체를 한곳에서 조립한다**
 
@@ -1081,7 +1081,7 @@ fun AppNavHost(
 그래서 **"`ViewModel`이 만들어지면 어떻게 되어야 하는가"** 에 대한 답은 이렇다.
 
 - **생성자는 가볍게.** 의존성을 받아 두고, route 인자를 읽고, 상태 흐름을 **정의**만 한다. 무거운 작업을 즉시 시작하지 않는다.
-- **로딩은 구독이 시작할 때.** `stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), Loading)`이면 화면이 실제로 볼 때 시작하고, 화면이 안 보인 지 5초가 지나면 멈춘다. `init { viewModelScope.launch { load() } }`도 흔히 쓰고 공식 코드랩에도 나오지만, 만들자마자 호출이 나가므로 테스트에서 생성만 해도 저장소가 불린다. 둘 다 틀린 방식은 아니다. 이 글은 [Now in Android](https://github.com/android/nowinandroid)처럼 `stateIn`을 쓴다. → [`048-android-viewmodel-encapsulation-and-async-timing.md`](../todos/048-android-viewmodel-encapsulation-and-async-timing.md), [`059-compose-launchedeffect-and-snapshotflow.md`](../todos/059-compose-launchedeffect-and-snapshotflow.md)
+- **로딩은 구독이 시작할 때.** `stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), Loading)`이면 화면이 실제로 볼 때 시작하고, 화면이 안 보인 지 5초가 지나면 멈춘다. `init { viewModelScope.launch { load() } }`도 흔히 쓰고 공식 코드랩에도 나오지만, 만들자마자 호출이 나가므로 테스트에서 생성만 해도 저장소가 불린다. 둘 다 틀린 방식은 아니다. 이 글은 [Now in Android](https://github.com/android/nowinandroid)처럼 `stateIn`을 쓴다. → [`048-android-viewmodel-encapsulation-and-async-timing.md`](../todos/048-android-viewmodel-encapsulation-and-async-timing.md)
 - **받지 말아야 할 것.** `Activity`·`View`의 `Context`, `NavController`, 컴포저블의 상태. 모두 `ViewModel`보다 먼저 죽을 수 있어 메모리 누수가 난다. `Context`가 필요한 일(DB, 파일)은 저장소 쪽에서 `applicationContext`로 한다.
 - **route 인자는 `SavedStateHandle`에서.** 컴포저블에서 `entry.toRoute<ItemDetail>().itemId`를 꺼내 팩토리에 직접 넘길 수도 있다. 하지만 `SavedStateHandle`에서 읽으면 프로세스가 죽었다 살아날 때도 인자가 복원되고, Hilt로 옮길 때 코드가 그대로 간다.
 

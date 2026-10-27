@@ -141,8 +141,6 @@ import androidx.compose.runtime.mutableStateOf
 
 다만 `State`가 틀린 것은 아니다. Compose 전용 앱에서 단순한 상태라면 충분하고, 공식 문서도 두 방식을 모두 소개한다. **강의 단계에서는 이대로 두고, 나중에 `Flow` 연산이 필요해지면 옮기는 것이 현실적이다.**
 
-→ [`057-kotlin-flow-concepts-and-suspend.md`](057-kotlin-flow-concepts-and-suspend.md), [`058-compose-collectasstate-flow-to-state.md`](058-compose-collectasstate-flow-to-state.md)
-
 ### 상태를 하나로 묶기
 
 지금은 필드가 따로 논다.

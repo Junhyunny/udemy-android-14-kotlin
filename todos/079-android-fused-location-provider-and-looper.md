@@ -158,8 +158,6 @@ fun locationUpdates(): Flow<LocationData> = callbackFlow {
 
 `awaitClose`가 핵심이다. **수집을 멈추는 순간 위치 업데이트도 멈춘다.** 지금 코드의 "영원히 멈추지 않는" 문제가 구조적으로 해결된다.
 
-→ [`057-kotlin-flow-concepts-and-suspend.md`](057-kotlin-flow-concepts-and-suspend.md), [`058-compose-collectasstate-flow-to-state.md`](058-compose-collectasstate-flow-to-state.md)
-
 ### 현재 구조의 문제 정리
 
 ```kotlin
@@ -237,7 +235,7 @@ override fun onLocationResult(result: LocationResult) {
 }
 ```
 
-이 프로젝트의 `reverseGeocodeLocation`이 정확히 이 형태다. → [`078-android-play-services-location-dependency.md`](078-android-play-services-location-dependency.md), [`054-kotlin-coroutine-dispatchers.md`](054-kotlin-coroutine-dispatchers.md)
+이 프로젝트의 `reverseGeocodeLocation`이 정확히 이 형태다. → [`078-android-play-services-location-dependency.md`](078-android-play-services-location-dependency.md)
 
 ## 체크리스트
 

@@ -150,8 +150,6 @@ LaunchedEffect(Unit) {
 
 지금 코드는 **버튼 `onClick`에서** 부르고 있어서 문제가 없다. 클릭 람다는 컴포지션이 아니라 **이벤트 시점**에 실행되기 때문이다.
 
-→ [`059-compose-launchedeffect-and-snapshotflow.md`](059-compose-launchedeffect-and-snapshotflow.md)
-
 ### 어떤 케이스에 쓰는가
 
 | 하고 싶은 일 | 계약 |

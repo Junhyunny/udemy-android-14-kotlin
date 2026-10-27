@@ -103,7 +103,7 @@ if (id != 0L) {
 }
 ```
 
-**부수 효과는 효과 API 안에서 해야 한다.** → [`059-compose-launchedeffect-and-snapshotflow.md`](059-compose-launchedeffect-and-snapshotflow.md)
+**부수 효과는 효과 API 안에서 해야 한다.**
 
 ```kotlin
 // 최소 수정
@@ -119,7 +119,7 @@ LaunchedEffect(id) {
 }
 ```
 
-`collectAsState` 대신 **`first()`로 한 번만 읽는 것**이 핵심이다. 편집 화면에서는 DB를 계속 구독할 이유가 없다. 계속 구독하면 사용자의 입력을 DB 값이 덮어쓴다. → [`057-kotlin-flow-concepts-and-suspend.md`](057-kotlin-flow-concepts-and-suspend.md)
+`collectAsState` 대신 **`first()`로 한 번만 읽는 것**이 핵심이다. 편집 화면에서는 DB를 계속 구독할 이유가 없다. 계속 구독하면 사용자의 입력을 DB 값이 덮어쓴다.
 
 ### 문제 ② 캡슐화 — `ViewModel`이 해야 할 일
 
@@ -241,7 +241,7 @@ scope.launch {
 
 **즉 저장 버튼을 누르고 약 4초 동안 편집 화면에 머문다.** 사용자는 "저장이 안 됐나?" 하고 다시 누를 수 있다.
 
-그리고 화면을 나가면 이 컴포저블이 컴포지션을 떠나므로 `rememberCoroutineScope()`가 취소된다. **마지막 줄 `snackMessage.value = ""`는 실행되지 않을 수 있다.** → [`053-kotlin-coroutine-scope-concept.md`](053-kotlin-coroutine-scope-concept.md)
+그리고 화면을 나가면 이 컴포저블이 컴포지션을 떠나므로 `rememberCoroutineScope()`가 취소된다. **마지막 줄 `snackMessage.value = ""`는 실행되지 않을 수 있다.**
 
 순서를 바꾸는 것만으로 크게 나아진다.
 
@@ -260,7 +260,7 @@ fun addWish(wish: Wish) {
 }
 ```
 
-**호출자는 저장이 끝났는지, 실패했는지 알 수 없다.** 예외가 나면 코루틴이 조용히 죽거나 앱이 크래시한다. → [`055-kotlin-coroutines-exception-handling-try-catch.md`](055-kotlin-coroutines-exception-handling-try-catch.md)
+**호출자는 저장이 끝났는지, 실패했는지 알 수 없다.** 예외가 나면 코루틴이 조용히 죽거나 앱이 크래시한다.
 
 완료를 알려면 두 가지 방법이 있다.
 
@@ -337,7 +337,7 @@ composable(Screen.AddScreen.route + "/{id}") { AddEditDetailView(id, navControll
 
 ### 저장이 화면 수명보다 오래 살아야 한다면
 
-"저장 중에 화면을 나가도 저장은 끝나야 한다"면 `viewModelScope`도 부족할 수 있다. `ViewModel`이 정리되면 취소되기 때문이다. 주입된 앱 수명 스코프를 쓴다. → [`056-android-viewmodelscope-launch-necessity.md`](056-android-viewmodelscope-launch-necessity.md)
+"저장 중에 화면을 나가도 저장은 끝나야 한다"면 `viewModelScope`도 부족할 수 있다. `ViewModel`이 정리되면 취소되기 때문이다. 주입된 앱 수명 스코프를 쓴다.
 
 ## 체크리스트
 

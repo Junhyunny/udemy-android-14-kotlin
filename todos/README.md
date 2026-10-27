@@ -73,26 +73,14 @@
 - [ ] [`Graph` object로 의존성을 주입하는 방식은 베스트 프랙티스인가](050-android-manual-di-graph-object.md)
 - [ ] [수동 DI에서 Hilt로 옮기면 무엇이 바뀌고, 테스트는 무엇을 준비해야 하나](083-android-hilt-migration-and-testing.md)
 
-## 8. 코루틴과 반응형 상태
-
-- [ ] [`suspend` 키워드와 코루틴은 이벤트 루프인가](051-kotlin-coroutines-suspend-and-event-loop.md)
-- [ ] [중단된 코루틴의 상태는 어디에 저장되는가](052-kotlin-coroutines-continuation-state-machine.md)
-- [ ] [코루틴 스코프란 무엇인가](053-kotlin-coroutine-scope-concept.md)
-- [ ] [`Dispatchers.IO`는 무엇이고 다른 값들과 어떻게 다른가](054-kotlin-coroutine-dispatchers.md)
-- [ ] [코루틴 안의 `try-catch`는 왜 필요한가](055-kotlin-coroutines-exception-handling-try-catch.md)
-- [ ] [`viewModelScope.launch`로 감싸야 하는 이유](056-android-viewmodelscope-launch-necessity.md)
-- [ ] [`Flow`란 무엇인가 — 왜 `Flow` 반환에는 `suspend`가 없나](057-kotlin-flow-concepts-and-suspend.md)
-- [ ] [`collectAsState`로 `Flow`를 받으면 상태처럼 관리되는가](058-compose-collectasstate-flow-to-state.md)
-- [ ] [`LaunchedEffect`와 `snapshotFlow`는 언제 실행되는가](059-compose-launchedeffect-and-snapshotflow.md)
-
-## 9. 데이터 저장과 네트워크
+## 8. 데이터 저장과 네트워크
 
 - [ ] [Room은 무엇인가 — JPA 같은 ORM인가](060-android-room-architecture.md)
 - [ ] [`@Dao`는 프록시를 만드는가](061-android-room-dao-code-generation.md)
 - [ ] [인터페이스만 있어도 함수를 호출할 수 있나 — Retrofit의 프록시](062-android-retrofit-interface-proxy.md)
 - [ ] [API Key를 안전하게 관리하는 방법](063-android-api-key-secure-management.md)
 
-## 10. Navigation
+## 9. Navigation
 
 - [ ] [`androidx.navigation`과 `androidx.navigation.compose`의 차이](064-android-navigation-package-compose-vs-runtime.md)
 - [ ] [`NavHost`, `NavController`, `composable`, `dialog`의 역할](065-android-navigation-navhost-composable-dialog.md)
@@ -105,7 +93,7 @@
 - [ ] [`navigate` 뒤에 오는 람다는 무엇인가 — `NavOptionsBuilder`](072-android-navigation-navoptions-builder.md)
 - [ ] [`navigation-compose`와 `navigation3`은 무엇이 다른가](073-android-navigation-compose-vs-navigation3.md)
 
-## 11. 권한, 위치 및 지도 API
+## 10. 권한, 위치 및 지도 API
 
 - [ ] [`rememberLauncherForActivityResult`는 왜 사용하는가](074-android-activity-result-api-and-launcher.md)
 - [ ] [`@RequiresPermission`은 어떤 용도로 사용하는가](075-android-requires-permission-annotation.md)
