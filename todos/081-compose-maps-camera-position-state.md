@@ -120,7 +120,7 @@ scope.launch {
 }
 ```
 
-`animate()`는 `suspend` 함수라 **코루틴 스코프가 필요하다.**
+`animate()`는 `suspend` 함수라 **코루틴 안에서 불러야 한다.** 콜백에서는 `scope.launch`로, 상태 변화에 반응할 때는 `LaunchedEffect`로 실행한다. → [`084-kotlin-coroutine-scope.md`](084-kotlin-coroutine-scope.md)
 
 ```kotlin
 LaunchedEffect(userLocation.value) {

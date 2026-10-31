@@ -191,7 +191,7 @@ fun rememberAsyncImagePainter(model: Any?): AsyncImagePainter {
 | `rememberSaveable { }` | 아무 객체 | 키가 바뀔 때 (+ 회전·프로세스 종료에도 복원) |
 | `rememberScrollState()` | `ScrollState` | 없음 |
 | `rememberNavController()` | `NavHostController` | 없음 |
-| `rememberCoroutineScope()` | `CoroutineScope` | 없음 (컴포지션을 떠나면 취소) |
+| `rememberCoroutineScope()` | `CoroutineScope` | 없음 → [`084`](084-kotlin-coroutine-scope.md) |
 | `rememberAsyncImagePainter(model)` | `AsyncImagePainter` | `model`이 바뀔 때 |
 
 **`remember`가 붙어 있으면 "컴포저블 안에서 만들어도 안전한 함수"**라고 읽으면 된다. 반대로 `remember`가 없는 생성자를 컴포저블 본문에서 직접 호출하고 있다면 의심해야 한다.

@@ -241,7 +241,7 @@ scope.launch {
 
 **즉 저장 버튼을 누르고 약 4초 동안 편집 화면에 머문다.** 사용자는 "저장이 안 됐나?" 하고 다시 누를 수 있다.
 
-그리고 화면을 나가면 이 컴포저블이 컴포지션을 떠나므로 `rememberCoroutineScope()`가 취소된다. **마지막 줄 `snackMessage.value = ""`는 실행되지 않을 수 있다.**
+그리고 **마지막 줄 `snackMessage.value = ""`는 실행되지 않을 수 있다.** 화면을 나갈 때 스코프가 취소되기 때문이다. → [`084-kotlin-coroutine-scope.md`](084-kotlin-coroutine-scope.md)
 
 순서를 바꾸는 것만으로 크게 나아진다.
 
@@ -337,7 +337,7 @@ composable(Screen.AddScreen.route + "/{id}") { AddEditDetailView(id, navControll
 
 ### 저장이 화면 수명보다 오래 살아야 한다면
 
-"저장 중에 화면을 나가도 저장은 끝나야 한다"면 `viewModelScope`도 부족할 수 있다. `ViewModel`이 정리되면 취소되기 때문이다. 주입된 앱 수명 스코프를 쓴다.
+"저장 중에 화면을 나가도 저장은 끝나야 한다"면 어떤 스코프를 써야 하는지는 [`084-kotlin-coroutine-scope.md`](084-kotlin-coroutine-scope.md)에 정리했다.
 
 ## 체크리스트
 

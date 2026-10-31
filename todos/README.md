@@ -72,6 +72,7 @@
 - [ ] [`Repository` 호출이 없어도 동작하는데 왜 필요한가](049-android-repository-single-source-of-truth.md)
 - [ ] [`Graph` object로 의존성을 주입하는 방식은 베스트 프랙티스인가](050-android-manual-di-graph-object.md)
 - [ ] [수동 DI에서 Hilt로 옮기면 무엇이 바뀌고, 테스트는 무엇을 준비해야 하나](083-android-hilt-migration-and-testing.md)
+- [ ] [코루틴 스코프 — 누가 코루틴의 수명을 쥐고 있는가](084-kotlin-coroutine-scope.md)
 
 ## 8. 데이터 저장과 네트워크
 

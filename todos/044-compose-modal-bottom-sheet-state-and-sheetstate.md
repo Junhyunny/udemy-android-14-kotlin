@@ -99,7 +99,7 @@ scope.launch {
 }
 ```
 
-...사실 이 형태도 `hide()`가 끝난 뒤에 실행되므로 동작은 한다. 공식 예제가 `invokeOnCompletion`을 쓰는 이유는 **코루틴이 취소됐을 때도 정리하기 위해서**다. 화면을 벗어나 `scope`가 취소되면 `hide()` 다음 줄은 실행되지 않지만, `invokeOnCompletion`은 취소 시에도 불린다. 그래서 `!sheetState.isVisible` 검사가 함께 들어간다.
+...사실 이 형태도 `hide()`가 끝난 뒤에 실행되므로 동작은 한다. 공식 예제가 `invokeOnCompletion`을 쓰는 이유는 스코프가 취소되는 경우 때문이다. → [`084-kotlin-coroutine-scope.md`](084-kotlin-coroutine-scope.md)
 
 > "you can use `sheetState.hide()` with `.invokeOnCompletion` to only set `showBottomSheet = false` after the animation completes"
 
@@ -233,7 +233,6 @@ if (showBottomSheet) {
 - [ ] 컴포지션에 없는 시트에 `show()`를 불러도 소용없는 이유를 안다.
 - [ ] `hide()`만 호출하면 왜 부족한지 설명할 수 있다.
 - [ ] `onDismissRequest`가 언제 불리는지 안다.
-- [ ] `invokeOnCompletion`을 쓰는 이유(취소 대응)를 설명할 수 있다.
 - [ ] `SheetValue`의 세 상태와 `isVisible`의 의미를 안다.
 - [ ] `skipPartiallyExpanded`, `confirmValueChange`의 용도를 안다.
 - [ ] 드로어와 바텀 시트의 제어 방식이 다른 이유를 설명할 수 있다.

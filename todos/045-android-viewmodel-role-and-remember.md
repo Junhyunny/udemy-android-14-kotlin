@@ -55,12 +55,12 @@ class CounterViewModel(private val repository: CounterRepository) : ViewModel() 
 
 정리하면 두 축이다. **"유지"는 `ViewModel`이, "알림"은 `mutableStateOf`가** 담당한다. 컴포저블 안이라면 "유지"를 `remember`가 맡을 뿐이다.
 
-### `viewModelScope`와 `onCleared`
+### `onCleared`
 
 `ViewModel`은 수명을 갖는 객체이므로 정리 지점도 제공한다.
 
 - `onCleared()`는 "`ViewModelStoreOwner`가 생명주기 과정에서 `ViewModel`을 파괴할 때" 호출된다.
-- `viewModelScope`는 "`ViewModel`의 생명주기를 자동으로 따르는 내장 `CoroutineScope`"다. 여기서 시작한 코루틴은 `ViewModel`이 정리될 때 함께 취소된다.
+- `ViewModel`의 수명을 따르는 코루틴 스코프 `viewModelScope`는 [`084-kotlin-coroutine-scope.md`](084-kotlin-coroutine-scope.md)에 정리했다.
 
 컴포저블에서 `remember`로 만든 객체에는 이런 장치가 없다. 오래 사는 작업을 다뤄야 한다면 `ViewModel`이 있어야 하는 이유다.
 
@@ -140,7 +140,7 @@ fun CounterScreen(count: Int, onIncrement: () -> Unit) { ... }
 - [ ] `remember`와 `ViewModel`의 수명 차이를 설명할 수 있다.
 - [ ] `ViewModel` 안에서 `remember`를 쓰지 않는 이유를 설명할 수 있다.
 - [ ] `ViewModel` 안에서도 `mutableStateOf`는 필요한 이유를 설명할 수 있다.
-- [ ] `onCleared`와 `viewModelScope`의 용도를 설명할 수 있다.
+- [ ] `onCleared`의 용도를 설명할 수 있다.
 - [ ] 상태를 `MutableState`로 노출하면 안 되는 이유를 설명할 수 있다.
 - [ ] `ViewModel`이 `Context`를 들고 있으면 안 되는 이유를 설명할 수 있다.
 
